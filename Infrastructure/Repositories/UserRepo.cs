@@ -18,7 +18,7 @@ public class UserRepo(UserContext userContext) : BaseRepo<UserEntity>(userContex
     {
         try
         {
-            return _userContext.Users.Include(x => x.Email).ToList();
+            return _userContext.Users.Include(x => x.Role).Include(x => x.ContactInformation).Include(x => x.Authentication).Include(x => x.Address).ToList();
 
         }
         catch (Exception ex) { Debug.WriteLine("ERROR :: " + ex.Message); }
@@ -29,7 +29,7 @@ public class UserRepo(UserContext userContext) : BaseRepo<UserEntity>(userContex
     {
         try
         {
-            return _userContext.Users.Include(x => x.Email).Include(x => x.ContactInformation.FirstName).FirstOrDefault(predicate, null!);
+            return _userContext.Users.Include(x => x.Role).Include(x => x.ContactInformation).Include(x => x.Authentication).Include(x => x.Address).FirstOrDefault(predicate, null!);
 
         }
         catch (Exception ex) { Debug.WriteLine("ERROR :: " + ex.Message); }

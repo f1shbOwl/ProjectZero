@@ -47,7 +47,8 @@ public abstract class BaseRepo<TEntity> where TEntity : class
     {
         try
         {
-            return _userContext.Set<TEntity>().FirstOrDefault(predicate, null!);
+            var result = _userContext.Set<TEntity>().FirstOrDefault(predicate);
+            return result!;
 
         }
         catch (Exception ex) { Debug.WriteLine("ERROR :: " + ex.Message); }
@@ -56,15 +57,15 @@ public abstract class BaseRepo<TEntity> where TEntity : class
 
     //Update
 
-    public virtual TEntity Update(TEntity entity)
+    public TEntity Update(Expression<Func<TEntity, bool>> expression, TEntity entity)
     {
         try
         {
-            var entityToUpdate = _userContext.Set<TEntity>().Find(entity);
+            var entityToUpdate = _userContext.Set<TEntity>().FirstOrDefault(expression, entity);
             if (entityToUpdate != null)
             {
                 entityToUpdate = entity;
-                _userContext.Set<TEntity>().Update(entityToUpdate);
+                _userContext.Entry(entityToUpdate).CurrentValues.SetValues(entity);
                 _userContext.SaveChanges(); 
 
                 return entityToUpdate;

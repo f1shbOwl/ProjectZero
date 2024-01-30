@@ -7,9 +7,8 @@ namespace Infrastructure.Contexts;
 
 public partial class UserContext : DbContext
 {
-    public UserContext()
-    {
-        
+    public UserContext() 
+    { 
     }
 
     public UserContext(DbContextOptions<UserContext> options) : base(options)

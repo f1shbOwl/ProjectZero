@@ -1,99 +1,110 @@
 ﻿using Infrastructure.Dtos;
 using Infrastructure.Entities;
 using Infrastructure.Repositories;
-
+using System.Diagnostics;
 
 namespace Infrastructure.Services;
 
-public class UserService (UserRepo userRepo, AddressRepo addressRepo, AuthenticationRepo authenticationRepo, ContactInformationRepo contactInformationRepo, RoleRepo roleRepo)
+public class UserService
 {
+    private readonly UserRepo _userRepo;
+    private readonly RoleService _roleService;
+    private readonly AddressService _addressService;
+    private readonly AuthenticationService _authenticationService;
+    private readonly ContactInformationService _contactInformationService;
+    
 
-    private readonly UserRepo _userRepo = userRepo;
-    private readonly AddressRepo _addressRepo = addressRepo;
-    private readonly AuthenticationRepo _authenticationRepo = authenticationRepo;
-    private readonly ContactInformationRepo _contactInformationRepo = contactInformationRepo;
-    private readonly RoleRepo _roleRepo = roleRepo;
-
-
-    public bool CreateUser(User user)
+    public UserService(UserRepo userRepo, RoleService roleService, AddressService addressService, AuthenticationService authenticationService, ContactInformationService contactInformationService)
     {
-        if (!_userRepo.Exists(x => x.Email == user.Email))
-        {
-            var roleEntity = new RoleEntity
-            {
-                RoleName = user.RoleName,
-                
-            };
-            var roleResult = _roleRepo.Create(roleEntity);
-
-
-
-            var addressEntity = new AddressEntity
-            {
-                StreetName = user.StreetName,
-                PostalCode = user.PostalCode,
-                City = user.City,
-            };
-            var addressResult = _addressRepo.Create(addressEntity);
-
-
-            var userEntity = new UserEntity
-            {
-                Email = user.Email,
-                AddressId = addressResult.Id,
-                RoleId = roleResult.Id,
-
-            };
-            var userResult = _userRepo.Create(userEntity);
-
-
-
-            var contactInformationEntity = new ContactInformationEntity
-            {
-                UserId = userResult.Id,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                PhoneNumber = user.PhoneNumber,
-
-            };
-            var contactInformationResult = _contactInformationRepo.Create(contactInformationEntity);
-
-
-
-            var authenticationEntity = new AuthenticationEntity
-            {
-                UserId = userResult.Id,
-                UserName = user.UserName,
-                Password = user.Password,
-            };
-            var authenticationResult = _authenticationRepo.Create(authenticationEntity);
-
-            
-            if (authenticationResult != null) 
-                return true;
-        }
-        return false;
-
-        
+        _userRepo = userRepo;
+        _roleService = roleService;
+        _addressService = addressService;
+        _authenticationService = authenticationService;
+        _contactInformationService = contactInformationService;
     }
+
+    public UserEntity CreateUser(User user)
+    {
+        try
+        {
+            if (!_userRepo.Exists(x => x.Email == user.Email))
+            {
+                var roleEntity = _roleService.CreateRole(user.RoleName);
+                var addressEntity = _addressService.CreateAddress(user.StreetName, user.PostalCode, user.City);
+
+                var userEntity = new UserEntity
+                {
+                    Email = user.Email,
+                    RoleId = roleEntity.Id,
+                    AddressId = addressEntity.Id
+                };
+
+                var userResult = _userRepo.Create(userEntity);
+
+                if (userResult != null)
+                {
+                    var contactInformationEntity = _contactInformationService.CreateContactInfo(user.FirstName, user.LastName, user.PhoneNumber!, userResult.Id);
+                    var authenticationEntity = _authenticationService.CreateAuthentication(user.UserName, user.Password, userResult.Id);
+                }
+                return userResult!;
+            }
+        }
+        catch (Exception ex) { Debug.WriteLine("ERROR :: " + ex.Message); }
+        return null!;
+    }
+
 
     public IEnumerable<User> GetAllUsers()
     {
-        var result = _userRepo.GetAll();
+
         var users = new List<User>();
-        foreach (var user in result)
-            users.Add(new User
-            {
-                Email = user.Email,
-                FirstName = user.ContactInformation.FirstName,
-                LastName = user.ContactInformation.LastName,
-                PhoneNumber = user.ContactInformation.PhoneNumber,
-                StreetName = user.Address.StreetName,
-                City = user.Address.City,
-                RoleName = user.Role.RoleName
-            });
+        try
+        {
+            var result = _userRepo.GetAll();
+
+            foreach (var user in result)
+                users.Add(new User
+                {
+                    FirstName = user.ContactInformation.FirstName,
+                    LastName = user.ContactInformation.LastName,
+                    Email = user.Email,
+                    RoleName = user.Role.RoleName,
+                    PhoneNumber = user.ContactInformation.PhoneNumber,
+                    StreetName = user.Address.StreetName,
+                    City = user.Address.City,
+                    PostalCode = user.Address.PostalCode,
+                    UserName = user.Authentication.UserName,
+                    Password = user.Authentication.Password,
+                });
+        }
+        catch (Exception ex) { Debug.WriteLine("ERROR :: " + ex.Message); }
+
         return users;
     }
 
+    public UserEntity GetUserById(Guid userId)
+    {
+        var userEntity = _userRepo.GetOne(x => x.Id == userId);
+        return userEntity;
+    }
+
+    public UserEntity GetUserByEmail(User user)
+    {
+        var userEntity = _userRepo.GetOne(x => x.Email == user.Email);
+        return userEntity;
+    }
+
+
+    public UserEntity UpdateUser(UserEntity userEntity)
+    {
+        var updatedUserEntity = _userRepo.Update(x => x.Email == userEntity.Email, userEntity);
+        return updatedUserEntity;
+
+    }
+
+    public void DeleteUser(User user)
+    {
+        _userRepo.Delete(x => x.Email == user.Email);
+    }
 
 }
