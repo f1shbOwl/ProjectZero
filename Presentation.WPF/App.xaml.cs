@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Presentation.WPF.ViewModels;
+using Presentation.WPF.Views;
 using System.Windows;
 
 namespace Presentation.WPF
@@ -12,11 +13,11 @@ namespace Presentation.WPF
     public partial class App : Application
     {
         
-        private static IHost? _builder;
+        private static IHost builder;
 
         public App()
         {
-            _builder = Host.CreateDefaultBuilder().ConfigureServices(services =>
+            builder = Host.CreateDefaultBuilder().ConfigureServices(services =>
             {
                 services.AddDbContext<UserContext>(x => x.UseSqlServer(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=F:\Education\ec-projects\ProjectZero\Infrastructure\Data\Users_Database.mdf;Integrated Security=True;Connect Timeout=30"));
 
@@ -35,15 +36,20 @@ namespace Presentation.WPF
                 services.AddSingleton<MainViewModel>(); 
                 services.AddSingleton<MainWindow>();
 
+                services.AddSingleton<UserListViewModel>();
+                services.AddSingleton<UserListView>();
+
 
             }).Build();
         }
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            _builder!.Start();
+            builder.Start();
 
-            var mainWindow = _builder!.Services.GetRequiredService<MainWindow>();
+            var mainWindow = builder.Services.GetRequiredService<MainWindow>();
+            var mainViewModel = builder.Services.GetRequiredService<MainViewModel>();
+            mainViewModel.CurrentViewModel = builder.Services.GetRequiredService<UserListViewModel>();
             mainWindow.Show();
         }
     }

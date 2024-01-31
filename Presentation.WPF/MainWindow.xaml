@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:Presentation.WPF"
         
         xmlns:viewmodels="clr-namespace:Presentation.WPF.ViewModels"
+        xmlns:views="clr-namespace:Presentation.WPF.Views"
         d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
         
         WindowStartupLocation="CenterScreen"
@@ -14,7 +15,14 @@
     
     
     <Grid Margin="20">
-        
-        
+        <ContentControl Content="{Binding CurrentViewModel}">
+
+            <ContentControl.Resources>
+                <DataTemplate DataType="{x:Type viewmodels:UserListViewModel}">
+                    <views:UserListView />
+                </DataTemplate>
+            </ContentControl.Resources>
+
+        </ContentControl>
     </Grid>
 </Window>

@@ -5,11 +5,55 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Presentation.WPF.Views"
              
-             
+             xmlns:viewmodels="clr-namespace:Presentation.WPF.ViewModels"
+             xmlns:models="clr-namespace:Infrastructure.Dtos;assembly=Infrastructure"
+             d:DataContext="{d:DesignInstance Type=viewmodels:UserListViewModel}"
              
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="400">
-    <Grid>
-            
+    
+    
+    <Grid Margin="20">
+
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+
+
+
+        <ListView Grid.Row="0" ItemsSource="{Binding UserList}" HorizontalContentAlignment="Stretch">
+            <ListView.ItemTemplate>
+                <DataTemplate DataType="{x:Type models:User}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0" Margin="0,0,0,5">
+                            <TextBlock>
+                        <Run Text="{Binding FirstName}" />
+                        <Run Text="{Binding LastName}" />
+                        <LineBreak />
+                        <Run Text="{Binding RoleName}" Foreground="DarkGray" />
+                            </TextBlock>
+                        </StackPanel>
+
+
+                        <Button Grid.Row="0" Grid.Column="1" Content="i" CommandParameter="{Binding .}" Command="{Binding Path=DataContext.NavigateToDetailsViewCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"  Width="25" Height="25" Margin="5" />
+                        <Button Grid.Row="0" Grid.Column="2" Content="..." CommandParameter="{Binding .}" Command="{Binding Path=DataContext.NavigateToEditContactViewCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"  Width="25" Height="25" Margin="5"  />
+                        <Button Grid.Row="0" Grid.Column="3" Content="X" CommandParameter="{Binding .}" Command="{Binding Path=DataContext.NavigateToDeleteContactViewCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Width="25" Height="25" Margin="5" />
+
+
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+
     </Grid>
 </UserControl>

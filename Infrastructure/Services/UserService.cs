@@ -1,4 +1,5 @@
-﻿using Infrastructure.Dtos;
+﻿using Infrastructure.Contexts;
+using Infrastructure.Dtos;
 using Infrastructure.Entities;
 using Infrastructure.Repositories;
 using System.Diagnostics;
@@ -56,30 +57,35 @@ public class UserService
 
     public IEnumerable<User> GetAllUsers()
     {
-
         var users = new List<User>();
         try
         {
             var result = _userRepo.GetAll();
 
-            foreach (var user in result)
-                users.Add(new User
-                {
-                    FirstName = user.ContactInformation.FirstName,
-                    LastName = user.ContactInformation.LastName,
-                    Email = user.Email,
-                    RoleName = user.Role.RoleName,
-                    PhoneNumber = user.ContactInformation.PhoneNumber,
-                    StreetName = user.Address.StreetName,
-                    City = user.Address.City,
-                    PostalCode = user.Address.PostalCode,
-                    UserName = user.Authentication.UserName,
-                    Password = user.Authentication.Password,
-                });
+            if (result != null)
+            {
+                foreach (var user in result)
+                    users.Add(new User
+                    {
+                        FirstName = user.ContactInformation.FirstName,
+                        LastName = user.ContactInformation.LastName,
+                        Email = user.Email,
+                        RoleName = user.Role.RoleName,
+                        PhoneNumber = user.ContactInformation.PhoneNumber,
+                        StreetName = user.Address.StreetName,
+                        City = user.Address.City,
+                        PostalCode = user.Address.PostalCode,
+                        UserName = user.Authentication.UserName,
+                        Password = user.Authentication.Password,
+                    });
+            }
+            return users;
+
         }
         catch (Exception ex) { Debug.WriteLine("ERROR :: " + ex.Message); }
+        return null!;
 
-        return users;
+
     }
 
     public UserEntity GetUserById(Guid userId)
