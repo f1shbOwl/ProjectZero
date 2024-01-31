@@ -13,7 +13,7 @@ namespace Presentation.WPF
     public partial class App : Application
     {
         
-        private static IHost builder;
+        private IHost builder;
 
         public App()
         {
