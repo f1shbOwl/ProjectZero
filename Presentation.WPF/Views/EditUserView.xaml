@@ -36,8 +36,8 @@
             <TextBox Text="{Binding Password}" Padding="2, 5" Margin="5" />
             <Label Content="Role:" Foreground="Gray" />
             <TextBox Text="{Binding RoleName}" Padding="2, 5" Margin="5" />
-            <Button Content="Save" CommandParameter="{Binding .}" Command="{Binding Path=DataContext.UpdateCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Padding="5" Margin="0,30" />
-            <Button Content="Save" CommandParameter="{Binding .}" Command="{Binding Path=DataContext.UpdateUserEmailCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Padding="5" Margin="0,30" />
+            <Button Content="Save all" CommandParameter="{Binding .}" Command="{Binding Path=DataContext.UpdateCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Padding="5" Margin="0,30" />
+            <Button Content="Update email" CommandParameter="{Binding .}" Command="{Binding Path=DataContext.UpdateUserEmailCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Padding="5" Margin="0,5" />
         </StackPanel>
 
     </Grid>
