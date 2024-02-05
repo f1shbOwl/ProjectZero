@@ -61,12 +61,11 @@ public abstract class BaseRepo<TEntity> where TEntity : class
     {
         try
         {
-            var entityToUpdate = _userContext.Set<TEntity>().FirstOrDefault(expression, entity);
+            var entityToUpdate = _userContext.Set<TEntity>().FirstOrDefault(expression);
             if (entityToUpdate != null)
             {
-                entityToUpdate = entity;
                 _userContext.Entry(entityToUpdate).CurrentValues.SetValues(entity);
-                _userContext.SaveChanges(); 
+                _userContext.SaveChanges();
 
                 return entityToUpdate;
             }

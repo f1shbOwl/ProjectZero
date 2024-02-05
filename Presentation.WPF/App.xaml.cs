@@ -36,9 +36,17 @@ namespace Presentation.WPF
                 services.AddSingleton<MainViewModel>(); 
                 services.AddSingleton<MainWindow>();
 
-                services.AddSingleton<UserListViewModel>();
-                services.AddSingleton<UserListView>();
+                services.AddTransient<UserListViewModel>();
+                services.AddTransient<UserListView>();
 
+                services.AddTransient<UserAddViewModel>();
+                services.AddTransient<UserAddView>();
+
+                services.AddTransient<UserDetailViewModel>();
+                services.AddTransient<UserDetailView>();
+
+                services.AddTransient<EditUserViewModel>();
+                services.AddTransient<EditUserView>();
 
             }).Build();
         }

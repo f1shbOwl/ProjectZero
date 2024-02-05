@@ -11,7 +11,7 @@
         
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
-        Title="Project Zero" Height="600" Width="400">
+        Title="Project Zero" Height="800" Width="600">
     
     
     <Grid Margin="20">
@@ -21,6 +21,19 @@
                 <DataTemplate DataType="{x:Type viewmodels:UserListViewModel}">
                     <views:UserListView />
                 </DataTemplate>
+
+                <DataTemplate DataType="{x:Type viewmodels:UserAddViewModel}">
+                    <views:UserAddView />
+                </DataTemplate>
+
+                <DataTemplate DataType="{x:Type viewmodels:UserDetailViewModel}">
+                    <views:UserDetailView />
+                </DataTemplate>
+
+                <DataTemplate DataType="{x:Type viewmodels:EditUserViewModel}">
+                    <views:EditUserView />
+                </DataTemplate>
+
             </ContentControl.Resources>
 
         </ContentControl>
