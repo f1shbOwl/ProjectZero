@@ -4,6 +4,7 @@ using Infrastructure.Entities;
 using Infrastructure.Repositories;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
+using System.Transactions;
 
 namespace Infrastructure.Services;
 
@@ -31,6 +32,38 @@ public class UserService
     /// </summary>
     public User SelectedUser { get; set; } = null!;
 
+
+
+
+    public async Task <UserEntity> CreateUserAsync(User user)
+    {
+        try
+        {
+            if (!_userRepo.Exists(x => x.Email == user.Email))
+            {
+                var roleEntity = _roleService.CreateRole(user.RoleName);
+                var addressEntity = _addressService.CreateAddress(user.StreetName, user.PostalCode, user.City);
+
+                var userEntity = new UserEntity
+                {
+                    Email = user.Email,
+                    RoleId = roleEntity.Id,
+                    AddressId = addressEntity.Id
+                };
+
+                var userResult = await _userRepo.CreateAsync(userEntity);
+
+                if (userResult != null)
+                {
+                    var contactInformationEntity = _contactInformationService.CreateContactInfo(user.FirstName, user.LastName, user.PhoneNumber!, userResult.Id);
+                    var authenticationEntity = _authenticationService.CreateAuthentication(user.UserName, user.Password, userResult.Id);
+                }
+                return userResult!;
+            }
+        }
+        catch (Exception ex) { Debug.WriteLine("ERROR :: " + ex.Message); }
+        return null!;
+    }
 
 
     public UserEntity CreateUser(User user)
@@ -112,24 +145,35 @@ public class UserService
     }
 
 
-
-
-
-
-    /// <summary>
-    /// Den här metoden gör vad den ska som flera andra när det kommer till att editera uppgifterna men det sparas inte i detabasen.
-    /// Datan resetas när man går tillbaka till list och sedan in igen i detailview.
-    /// </summary>
-    /// <param name="updatedUser"></param>
-    /// <returns></returns>
-    public User UpdateUser(User updatedUser)
+    public async Task <User> UpdateUserEmailAsync(User updatedUser)
     {
         try
         {
-            var existingUserEntity = _userRepo.GetOne(x => x.Email == updatedUser.Email);
+            var userEntity = new UserEntity { Email =  updatedUser.Email };
+            var updatedUserEntity = await _userRepo.UpdateAsync(x => x.Email == userEntity.Email, userEntity);
+            if (userEntity != null)
+            {
+                var user = new User { Email = userEntity.Email };
+                return user;
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine("ERROR :: " + ex.Message);
+        }
+        return null!;
+    }
+
+
+    public async Task<UserEntity> UpdateUserAsync(User updatedUser)
+    {
+        try
+        {
+            var existingUserEntity = await _userRepo.GetOneAsync(x => x.Email == updatedUser.Email);
 
             if (existingUserEntity != null)
             {
+                existingUserEntity.Email = updatedUser.Email;
                 existingUserEntity.ContactInformation.FirstName = updatedUser.FirstName;
                 existingUserEntity.ContactInformation.LastName = updatedUser.LastName;
                 existingUserEntity.ContactInformation.PhoneNumber = updatedUser.PhoneNumber;
@@ -143,23 +187,7 @@ public class UserService
                 existingUserEntity.Authentication.UserName = updatedUser.UserName;
                 existingUserEntity.Authentication.Password = updatedUser.Password;
 
-                _userRepo.Update(x => x.Email == updatedUser.Email, existingUserEntity);
-
-                var updatedUserDto = new User
-                {
-                    Email = existingUserEntity.Email,
-                    FirstName = existingUserEntity.ContactInformation.FirstName,
-                    LastName = existingUserEntity.ContactInformation.LastName,
-                    PhoneNumber = existingUserEntity.ContactInformation.PhoneNumber,
-                    StreetName = existingUserEntity.Address.StreetName,
-                    PostalCode = existingUserEntity.Address.PostalCode,
-                    City = existingUserEntity.Address.City,
-                    RoleName = existingUserEntity.Role.RoleName,
-                    UserName = existingUserEntity.Authentication.UserName,
-                    Password = existingUserEntity.Authentication.Password,
-                };
-
-                return updatedUserDto;
+                return await _userRepo.UpdateAsync(x => x.Email == updatedUser.Email, existingUserEntity);
             }
         }
         catch (Exception ex)
@@ -169,6 +197,64 @@ public class UserService
 
         return null!;
     }
+
+
+
+    /// <summary>
+    /// Den här metoden gör vad den ska som flera andra när det kommer till att editera uppgifterna men det sparas inte i detabasen.
+    /// Datan resetas när man går tillbaka till list och sedan in igen i detailview.
+    /// </summary>
+    /// <param name="updatedUser"></param>
+    /// <returns></returns>
+    //public async Task<User> UpdateUserAsync(User updatedUser)
+    //{
+    //    try
+    //    {
+    //        var existingUserEntity = await _userRepo.GetOneAsync(x => x.Email == updatedUser.Email);
+
+    //        if (existingUserEntity != null)
+    //        {
+    //            existingUserEntity.Email = updatedUser.Email;
+    //            existingUserEntity.ContactInformation.FirstName = updatedUser.FirstName;
+    //            existingUserEntity.ContactInformation.LastName = updatedUser.LastName;
+    //            existingUserEntity.ContactInformation.PhoneNumber = updatedUser.PhoneNumber;
+
+    //            existingUserEntity.Address.StreetName = updatedUser.StreetName;
+    //            existingUserEntity.Address.PostalCode = updatedUser.PostalCode;
+    //            existingUserEntity.Address.City = updatedUser.City;
+
+    //            existingUserEntity.Role.RoleName = updatedUser.RoleName;
+
+    //            existingUserEntity.Authentication.UserName = updatedUser.UserName;
+    //            existingUserEntity.Authentication.Password = updatedUser.Password;
+
+    //            await _userRepo.UpdateAsync(x => x.Email == updatedUser.Email, existingUserEntity);
+
+
+    //            var updatedUserDto = new User
+    //            {
+    //                Email = existingUserEntity.Email,
+    //                FirstName = existingUserEntity.ContactInformation.FirstName,
+    //                LastName = existingUserEntity.ContactInformation.LastName,
+    //                PhoneNumber = existingUserEntity.ContactInformation.PhoneNumber,
+    //                StreetName = existingUserEntity.Address.StreetName,
+    //                PostalCode = existingUserEntity.Address.PostalCode,
+    //                City = existingUserEntity.Address.City,
+    //                RoleName = existingUserEntity.Role.RoleName,
+    //                UserName = existingUserEntity.Authentication.UserName,
+    //                Password = existingUserEntity.Authentication.Password,
+    //            };
+
+    //            return updatedUserDto;
+    //        }
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        Debug.WriteLine("ERROR :: " + ex.Message);
+    //    }
+
+    //    return null!;
+    //}
 
 
 
@@ -249,12 +335,12 @@ public class UserService
 
     // Den här metoden uppdaterar också i edit, resetas när man går tillbaka till list och in igen i detailview. Databasen ej uppdaterad.
 
-    //public UserEntity UpdateUser(User updatedUser)
+    //public async Task<User> UpdateUserAsync(User updatedUser)
     //{
     //    try
     //    {
     //        var userEntity = new UserEntity { Email = updatedUser.Email };
-    //        var updatedUserEntity = _userRepo.Update(x => x.Email == updatedUser.Email, userEntity);
+    //        var updatedUserEntity = await _userRepo.UpdateAsync(x => x.Email == updatedUser.Email, userEntity);
 
     //        if (updatedUserEntity != null)
     //        {
@@ -271,7 +357,7 @@ public class UserService
     //                RoleName = updatedUser.RoleName,
     //                Password = updatedUser.Password,
     //            };
-    //            return updatedUserEntity;
+    //            return user;
     //        }
 
     //    }
@@ -281,18 +367,18 @@ public class UserService
     //    }
     //    return null!;
     //}
- 
 
 
-    public UserEntity UpdateUser(UserEntity userEntity)
-    {
-        if (userEntity != null)
-        {
-            var updatedUserEntity = _userRepo.Update(x => x.Email == userEntity.Email, userEntity);
-            return updatedUserEntity;
-        }
-        return null!;
-    }
+
+    //public UserEntity UpdateUser(UserEntity userEntity)
+    //{
+    //    if (userEntity != null)
+    //    {
+    //        var updatedUserEntity = _userRepo.Update(x => x.Email == userEntity.Email, userEntity);
+    //        return updatedUserEntity;
+    //    }
+    //    return null!;
+    //}
 
     public void DeleteUser(User user)
     {

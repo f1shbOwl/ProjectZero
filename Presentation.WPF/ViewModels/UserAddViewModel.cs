@@ -22,9 +22,9 @@ public partial class UserAddViewModel : ObservableObject
 
 
     [RelayCommand]
-    private void AddUser(User user)
+    private async Task AddUser(User user)
     {
-        _userService.CreateUser(User);
+        await _userService.CreateUserAsync(User);
 
         var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
         mainViewModel.CurrentViewModel = _serviceProvider.GetRequiredService<UserListViewModel>();

@@ -25,13 +25,20 @@ public partial class EditUserViewModel : ObservableObject
 
 
 
-    /// <summary>
-    /// hmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm, hur ska denna skrivas?????????
-    /// </summary>
     [RelayCommand]
-    private void Update()
+    private async Task Update()
     {
-        _userService.UpdateUser(User);
+        await _userService.UpdateUserAsync(User);
+
+        var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
+        mainViewModel.CurrentViewModel = _serviceProvider.GetRequiredService<UserDetailViewModel>();
+
+    }
+
+    [RelayCommand]
+    private async Task UpdateUserEmail()
+    {
+        await _userService.UpdateUserEmailAsync(User);
 
         var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
         mainViewModel.CurrentViewModel = _serviceProvider.GetRequiredService<UserDetailViewModel>();

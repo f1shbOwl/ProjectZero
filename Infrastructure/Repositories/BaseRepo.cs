@@ -1,4 +1,7 @@
 ﻿using Infrastructure.Contexts;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
+using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using System.Linq.Expressions;
 
@@ -15,6 +18,20 @@ public abstract class BaseRepo<TEntity> where TEntity : class
 
 
     //Create
+
+
+    public virtual async Task <TEntity> CreateAsync(TEntity entity)
+    {
+        try
+        {
+            _userContext.Set<TEntity>().Add(entity);
+            await _userContext.SaveChangesAsync();
+            return entity;
+        }
+        catch (Exception ex) { Debug.WriteLine("ERROR :: " + ex.Message); }
+        return null!;
+    }
+
     public virtual TEntity Create(TEntity entity)
     {
         try
@@ -43,6 +60,19 @@ public abstract class BaseRepo<TEntity> where TEntity : class
 
     //ReadOne
 
+
+    public virtual async Task <TEntity> GetOneAsync(Expression<Func<TEntity, bool>> predicate)
+    {
+        try
+        {
+            var result = await _userContext.Set<TEntity>().FirstOrDefaultAsync(predicate);
+            return result!;
+
+        }
+        catch (Exception ex) { Debug.WriteLine("ERROR :: " + ex.Message); }
+        return null!;
+    }
+
     public virtual TEntity GetOne(Expression<Func<TEntity, bool>> predicate)
     {
         try
@@ -56,6 +86,26 @@ public abstract class BaseRepo<TEntity> where TEntity : class
     }
 
     //Update
+
+
+
+    public async Task <TEntity> UpdateAsync(Expression<Func<TEntity, bool>> expression, TEntity entity)
+    {
+        try
+        {
+            var entityToUpdate = await _userContext.Set<TEntity>().FirstOrDefaultAsync(expression);
+            if (entityToUpdate != null)
+            {
+                _userContext.Entry(entityToUpdate).CurrentValues.SetValues(entity);
+                await _userContext.SaveChangesAsync();
+
+                return entityToUpdate;
+            }
+
+        }
+        catch (Exception ex) { Debug.WriteLine("ERROR :: " + ex.Message); }
+        return null!;
+    }
 
     public TEntity Update(Expression<Func<TEntity, bool>> expression, TEntity entity)
     {
