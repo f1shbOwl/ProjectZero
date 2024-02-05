@@ -19,7 +19,7 @@ namespace Presentation.WPF
         {
             builder = Host.CreateDefaultBuilder().ConfigureServices(services =>
             {
-                services.AddDbContext<UserContext>(x => x.UseSqlServer(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=F:\Education\ec-projects\ProjectZero\Infrastructure\Data\Users_Database.mdf;Integrated Security=True;Connect Timeout=30"));
+                services.AddDbContext<UserContext>(x => x.UseSqlServer(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=F:\Education\ec-projects\ProjectZero\Infrastructure\Data\Users_Database.mdf;Integrated Security=True;Connect Timeout=30"), ServiceLifetime.Transient);
 
                 services.AddScoped<RoleRepo>();
                 services.AddScoped<AddressRepo>();

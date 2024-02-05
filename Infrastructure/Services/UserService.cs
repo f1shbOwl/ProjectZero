@@ -111,6 +111,7 @@ public class UserService
                 foreach (var user in result)
                     users.Add(new User
                     {
+                        Id = user.Id,
                         FirstName = user.ContactInformation.FirstName,
                         LastName = user.ContactInformation.LastName,
                         Email = user.Email,
@@ -150,10 +151,10 @@ public class UserService
         try
         {
             var userEntity = new UserEntity { Email =  updatedUser.Email };
-            var updatedUserEntity = await _userRepo.UpdateAsync(x => x.Email == userEntity.Email, userEntity);
+            var updatedUserEntity = await _userRepo.UpdateAsync(x => x.Id == userEntity.Id, userEntity);
             if (userEntity != null)
             {
-                var user = new User { Email = userEntity.Email };
+                var user = new User { Email = updatedUser.Email };
                 return user;
             }
         }
@@ -169,14 +170,14 @@ public class UserService
     {
         try
         {
-            var existingUserEntity = await _userRepo.GetOneAsync(x => x.Email == updatedUser.Email);
+            var existingUserEntity = await _userRepo.GetOneAsync(x => x.Id == updatedUser.Id);
 
             if (existingUserEntity != null)
             {
                 existingUserEntity.Email = updatedUser.Email;
                 existingUserEntity.ContactInformation.FirstName = updatedUser.FirstName;
                 existingUserEntity.ContactInformation.LastName = updatedUser.LastName;
-                existingUserEntity.ContactInformation.PhoneNumber = updatedUser.PhoneNumber;
+                existingUserEntity.ContactInformation.PhoneNumber = updatedUser.PhoneNumber ?? existingUserEntity.ContactInformation.PhoneNumber;
 
                 existingUserEntity.Address.StreetName = updatedUser.StreetName;
                 existingUserEntity.Address.PostalCode = updatedUser.PostalCode;
@@ -187,7 +188,7 @@ public class UserService
                 existingUserEntity.Authentication.UserName = updatedUser.UserName;
                 existingUserEntity.Authentication.Password = updatedUser.Password;
 
-                return await _userRepo.UpdateAsync(x => x.Email == updatedUser.Email, existingUserEntity);
+                return await _userRepo.UpdateAsync(x => x.Id == updatedUser.Id, existingUserEntity);
             }
         }
         catch (Exception ex)
@@ -201,8 +202,7 @@ public class UserService
 
 
     /// <summary>
-    /// Den här metoden gör vad den ska som flera andra när det kommer till att editera uppgifterna men det sparas inte i detabasen.
-    /// Datan resetas när man går tillbaka till list och sedan in igen i detailview.
+    /// Den här metoden gör vad den men Email sparas inte till databasen.
     /// </summary>
     /// <param name="updatedUser"></param>
     /// <returns></returns>
@@ -228,7 +228,7 @@ public class UserService
     //            existingUserEntity.Authentication.UserName = updatedUser.UserName;
     //            existingUserEntity.Authentication.Password = updatedUser.Password;
 
-    //            await _userRepo.UpdateAsync(x => x.Email == updatedUser.Email, existingUserEntity);
+    //            await _userRepo.UpdateAsync(x => x.Id == updatedUser.Id, existingUserEntity);
 
 
     //            var updatedUserDto = new User
@@ -340,7 +340,7 @@ public class UserService
     //    try
     //    {
     //        var userEntity = new UserEntity { Email = updatedUser.Email };
-    //        var updatedUserEntity = await _userRepo.UpdateAsync(x => x.Email == updatedUser.Email, userEntity);
+    //        var updatedUserEntity = await _userRepo.UpdateAsync(x => x.Id == updatedUser.Id, userEntity);
 
     //        if (updatedUserEntity != null)
     //        {
