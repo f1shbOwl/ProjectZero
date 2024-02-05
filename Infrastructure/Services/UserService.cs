@@ -280,22 +280,23 @@ public class UserService
     //        Debug.WriteLine("ERROR :: " + ex.Message);
     //    }
     //    return null!;
-}
+ 
 
 
-    //public UserEntity UpdateUser(UserEntity userEntity)
-    //{
-    //    if (userEntity != null)
-    //    {
-    //        var updatedUserEntity = _userRepo.Update(x => x.Email == userEntity.Email, userEntity);
-    //        return updatedUserEntity;
-    //    }
-    //    return null!;
-    //}
+    public UserEntity UpdateUser(UserEntity userEntity)
+    {
+        if (userEntity != null)
+        {
+            var updatedUserEntity = _userRepo.Update(x => x.Email == userEntity.Email, userEntity);
+            return updatedUserEntity;
+        }
+        return null!;
+    }
 
     public void DeleteUser(User user)
     {
         _userRepo.Delete(x => x.Email == user.Email);
+        
     }
 
 }
