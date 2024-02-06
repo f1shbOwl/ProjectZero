@@ -65,7 +65,11 @@ public class UserService
         return null!;
     }
 
-
+    /// <summary>
+    /// Checks if user already exist, if not creates new user.
+    /// </summary>
+    /// <param name="user"></param>
+    /// <returns></returns>
     public UserEntity CreateUser(User user)
     {
         try
@@ -98,7 +102,10 @@ public class UserService
 
 
 
-
+    /// <summary>
+    /// Lists all users
+    /// </summary>
+    /// <returns></returns>
     public IEnumerable<User> GetAllUsers()
     {
         var users = new List<User>();
@@ -133,35 +140,47 @@ public class UserService
 
     }
 
-    public UserEntity GetUserById(Guid userId)
+    /// <summary>
+    /// Get user by Id
+    /// </summary>
+    /// <param name="user"></param>
+    /// <returns></returns>
+    public UserEntity GetUserById(User user)
     {
-        var userEntity = _userRepo.GetOne(x => x.Id == userId);
+        var userEntity = _userRepo.GetOne(x => x.Id == user.Id);
         return userEntity;
     }
 
-    public UserEntity GetUserByEmail(string email)
+    /// <summary>
+    /// Get user by Email
+    /// </summary>
+    /// <param name="user"></param>
+    /// <returns></returns>
+    public UserEntity GetUserByEmail(User user)
     {
-        var userEntity = _userRepo.GetOne(x => x.Email == email);
+        var userEntity = _userRepo.GetOne(x => x.Email == user.Email);
         return userEntity;
     }
 
 
-    public async Task <User> UpdateUserEmailAsync(User updatedUser)
+
+    public async Task<UserEntity> UpdateUserEmailAsync(User updatedUser)
     {
         try
         {
-            var userEntity = new UserEntity { Email =  updatedUser.Email };
-            var updatedUserEntity = await _userRepo.UpdateAsync(x => x.Id == userEntity.Id, userEntity);
-            if (userEntity != null)
+            var existingUserEntity = await _userRepo.GetOneAsync(x => x.Id == updatedUser.Id);
+
+            if (existingUserEntity != null)
             {
-                var user = new User { Email = updatedUser.Email };
-                return user;
+                existingUserEntity.Email = updatedUser.Email;
+                return await _userRepo.UpdateAsync(x => x.Id == updatedUser.Id, existingUserEntity);
             }
         }
         catch (Exception ex)
         {
             Debug.WriteLine("ERROR :: " + ex.Message);
         }
+
         return null!;
     }
 
@@ -174,19 +193,20 @@ public class UserService
 
             if (existingUserEntity != null)
             {
-                existingUserEntity.Email = updatedUser.Email;
-                existingUserEntity.ContactInformation.FirstName = updatedUser.FirstName;
-                existingUserEntity.ContactInformation.LastName = updatedUser.LastName;
-                existingUserEntity.ContactInformation.PhoneNumber = updatedUser.PhoneNumber ?? existingUserEntity.ContactInformation.PhoneNumber;
+                existingUserEntity.Role.RoleName = updatedUser.RoleName;
 
                 existingUserEntity.Address.StreetName = updatedUser.StreetName;
                 existingUserEntity.Address.PostalCode = updatedUser.PostalCode;
                 existingUserEntity.Address.City = updatedUser.City;
 
-                existingUserEntity.Role.RoleName = updatedUser.RoleName;
+                existingUserEntity.ContactInformation.FirstName = updatedUser.FirstName;
+                existingUserEntity.ContactInformation.LastName = updatedUser.LastName;
+                existingUserEntity.ContactInformation.PhoneNumber = updatedUser.PhoneNumber ?? existingUserEntity.ContactInformation.PhoneNumber;
 
                 existingUserEntity.Authentication.UserName = updatedUser.UserName;
                 existingUserEntity.Authentication.Password = updatedUser.Password;
+
+                existingUserEntity.Email = updatedUser.Email;
 
                 return await _userRepo.UpdateAsync(x => x.Id == updatedUser.Id, existingUserEntity);
             }
