@@ -60,7 +60,6 @@ public abstract class BaseRepo<TEntity> where TEntity : class
 
     //ReadOne
 
-
     public virtual async Task <TEntity> GetOneAsync(Expression<Func<TEntity, bool>> predicate)
     {
         try
@@ -85,9 +84,9 @@ public abstract class BaseRepo<TEntity> where TEntity : class
         return null!;
     }
 
+
+
     //Update
-
-
 
     public async Task <TEntity> UpdateAsync(Expression<Func<TEntity, bool>> expression, TEntity entity)
     {

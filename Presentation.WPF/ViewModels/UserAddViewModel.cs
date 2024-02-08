@@ -1,24 +1,37 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Infrastructure.Dtos;
+using Infrastructure.Entities;
 using Infrastructure.Services;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
+using System.Collections.ObjectModel;
 
 namespace Presentation.WPF.ViewModels;
 
 public partial class UserAddViewModel : ObservableObject
 {
     private readonly UserService _userService;
+    private readonly RoleService _roleService;
     private readonly IServiceProvider _serviceProvider;
 
-    public UserAddViewModel(UserService userService, IServiceProvider serviceProvider)
+
+    public UserAddViewModel(UserService userService,RoleService roleService ,IServiceProvider serviceProvider)
     {
         _userService = userService;
+        _roleService = roleService;
         _serviceProvider = serviceProvider;
+
+        RoleList = new ObservableCollection<Role>(_roleService.GetAllRoles());
     }
 
     [ObservableProperty]
-    private User user = new User();
+    private User user = new();
+
+
+    [ObservableProperty]
+    private ObservableCollection<Role> _roleList = new ObservableCollection<Role>();
+
 
 
     [RelayCommand]

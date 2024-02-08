@@ -13,6 +13,9 @@ public partial class UserListViewModel : ObservableObject
     private readonly IServiceProvider _serviceProvider;
     private readonly UserService _userService;
 
+    [ObservableProperty]
+    private ObservableCollection<User> _userList = new ObservableCollection<User>();
+
 
     public UserListViewModel(IServiceProvider serviceProvider, UserService userService)
     {
@@ -23,8 +26,7 @@ public partial class UserListViewModel : ObservableObject
     }
 
 
-    [ObservableProperty]
-    private ObservableCollection<User> _userList = new ObservableCollection<User>();
+
 
 
 
@@ -72,6 +74,13 @@ public partial class UserListViewModel : ObservableObject
 
         var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
         mainViewModel.CurrentViewModel = _serviceProvider.GetRequiredService<EditUserViewModel>();
+    }
+
+    [RelayCommand]
+    private void NavigateToRoles()
+    {
+        var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
+        mainViewModel.CurrentViewModel = _serviceProvider.GetRequiredService<RoleListViewModel>();
     }
 
 }

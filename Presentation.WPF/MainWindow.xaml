@@ -11,11 +11,20 @@
         
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
-        Title="Project Zero" Height="900" Width="600">
+        Title="Project Zero" Height="600" Width="800">
     
     
-    <Grid Margin="20">
-        <ContentControl Content="{Binding CurrentViewModel}">
+    <Grid>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+        </Grid>
+
+        
+        <ContentControl Grid.Column="1" Content="{Binding CurrentViewModel}">
 
             <ContentControl.Resources>
                 <DataTemplate DataType="{x:Type viewmodels:UserListViewModel}">
@@ -32,6 +41,10 @@
 
                 <DataTemplate DataType="{x:Type viewmodels:EditUserViewModel}">
                     <views:EditUserView />
+                </DataTemplate>
+
+                <DataTemplate DataType="{x:Type viewmodels:RoleListViewModel}">
+                    <views:RoleListView />
                 </DataTemplate>
 
             </ContentControl.Resources>

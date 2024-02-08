@@ -21,8 +21,6 @@
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
 
-
-
         <ListView Grid.Row="0" ItemsSource="{Binding UserList}" HorizontalContentAlignment="Stretch">
             <ListView.ItemTemplate>
                 <DataTemplate DataType="{x:Type models:User}">
@@ -57,6 +55,7 @@
 
         <StackPanel Grid.Row="1">
             <Button Content="Add new User" Command="{Binding NavigateToAddViewCommand}" Height="50" Width="150" Margin="10,10"/>
+            <Button Content="Roles" Command="{Binding NavigateToRolesCommand}" Height="50" Width="150" Margin="10,10"/>
         </StackPanel>
 
     </Grid>

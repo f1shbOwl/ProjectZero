@@ -48,6 +48,9 @@ namespace Presentation.WPF
                 services.AddTransient<EditUserViewModel>();
                 services.AddTransient<EditUserView>();
 
+                services.AddTransient<RoleListViewModel>();
+                services.AddTransient<RoleListView>();
+
             }).Build();
         }
 

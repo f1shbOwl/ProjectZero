@@ -1,4 +1,7 @@
-﻿namespace Infrastructure.Dtos;
+﻿using Infrastructure.Entities;
+using System.ComponentModel.DataAnnotations;
+
+namespace Infrastructure.Dtos;
 
 public class User
 {
@@ -13,4 +16,11 @@ public class User
     public string City { get; set; } = null!;
     public string UserName { get; set; } = null!;
     public string Password { get; set; } = null!;
+
+    //public Role Role { set; get; } = null!;
+    //public Address Address { set; get; } = null!;
+    //public Authentication Authentication{ set; get; } = null!;
+    //public ContactInformation ContactInformation { set; get; } = null!;
+
 }
+ 
