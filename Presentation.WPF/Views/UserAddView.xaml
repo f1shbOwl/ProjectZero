@@ -17,8 +17,8 @@
     <Grid Margin="40">
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="*" MaxHeight="200" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="*" MaxHeight="160" />
+            <RowDefinition Height="*"/>
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
 
@@ -28,37 +28,38 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Row="0" Grid.Column="0">
-            <Label Content="First name:" Foreground="Gray" Margin="5"/>
-            <TextBox Text="{Binding User.FirstName}" Padding="2,5" Margin="5" />
-            <Label Content="Last name:" Foreground="Gray" />
-            <TextBox Text="{Binding User.LastName}" Padding="2,5" Margin="5" />
+            <Label Content="First name:" Foreground="Gray"/>
+            <TextBox Text="{Binding User.FirstName}" Padding="2,5" Margin="5,5,20,0" />
+            <Label Content="Last name:" Foreground="Gray"/>
+            <TextBox Text="{Binding User.LastName}" Padding="2,5" Margin="5,5,20,0"  />
         </StackPanel>
 
         <StackPanel Grid.Row="0" Grid.Column="1">
-            <Label Content="Email:" Foreground="Gray" Margin="5" />
-            <TextBox Text="{Binding User.Email}" Padding="2,5" Margin="5" />
-            <Label Content="Phone number:" Foreground="Gray" />
-            <TextBox Text="{Binding PhoneNumber}" Padding="2,5" Margin="5" />
+            <Label Content="Email:" Foreground="Gray" Margin="20,0,0,0" />
+            <TextBox Text="{Binding User.Email}" Padding="2,5" Margin="25,5,20,0"  />
+            <Label Content="Phone number:" Foreground="Gray" Margin="20,0,0,0"  />
+            <TextBox Text="{Binding User.PhoneNumber}" Padding="2,5" Margin="25,5,20,0" />
         </StackPanel>
 
         <StackPanel Grid.Row="1" Grid.Column="0">
-            <Label Content="Street:" Foreground="Gray" />
-            <TextBox Text="{Binding User.StreetName}" Padding="2,5" Margin="5" />
+            <Label Content="Street:" Foreground="Gray"  />
+            <TextBox Text="{Binding User.StreetName}" Padding="2,5" Margin="5,5,20,0"/>
             <Label Content="Postal code:" Foreground="Gray" />
-            <TextBox Text="{Binding User.PostalCode}" Padding="2,5" Margin="5" />
+            <TextBox Text="{Binding User.PostalCode}" Padding="2,5" Margin="5,5,20,0" />
             <Label Content="City:" Foreground="Gray" />
-            <TextBox Text="{Binding User.City}" Padding="2,5" Margin="5" />
-            <Button Content="Add User" Command="{Binding AddUserCommand}" HorizontalAlignment="Right" Height="30" Width="110" Padding="5" Margin="40,20"  />
+            <TextBox Text="{Binding User.City}" Padding="2,5" Margin="5,5,20,0" />
+            <Button Content="Add User" Command="{Binding AddUserCommand}" HorizontalAlignment="Right" Height="30" Width="110" Padding="5" Margin="20,70"  />
         </StackPanel>
 
         <StackPanel Grid.Row="1" Grid.Column="1">
-            <Label Content="Username:" Foreground="Gray" />
-            <TextBox Text="{Binding User.UserName}" Padding="2,5" Margin="5" />
-            <Label Content="Password:" Foreground="Gray" />
-            <TextBox Text="{Binding User.Password}" Padding="2,5" Margin="5" />
-            <Label Content="Role:" Foreground="Gray" />
-            <TextBox Text="{Binding User.RoleName}" Padding="2,5" Margin="5" />
-            <Button Content="Cancel" Command="{Binding NavigateToListCommand}" HorizontalAlignment="Left" Height="30" Width="110" Padding="5" Margin="40,20" />
+            <Label Content="Username:" Foreground="Gray" Margin="20,0,0,0" />
+            <TextBox Text="{Binding User.UserName}" Padding="2,5" Margin="25,5,20,0" />
+            <Label Content="Password:" Foreground="Gray" Margin="20,0,0,0" />
+            <TextBox Text="{Binding User.Password}" Padding="2,5" Margin="25,5,20,0" />
+            <Label Content="Role:" Foreground="Gray" Margin="20,0,0,0" />
+            <!--<ComboBox ItemsSource="{Binding RoleList}" SelectedItem="{Binding SelectedRole, Mode=TwoWay}" DisplayMemberPath="RoleName" Padding="2,5" Margin="5" />-->
+            <TextBox Text="{Binding User.RoleName}" Padding="2,5" Margin="25,5,20,0" />
+            <Button Content="Cancel" Command="{Binding NavigateToListCommand}" HorizontalAlignment="Left" Height="30" Width="110" Padding="5" Margin="20,70" />
         </StackPanel>
 
 
