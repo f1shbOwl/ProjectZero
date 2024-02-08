@@ -29,6 +29,7 @@ public partial class UserAddViewModel : ObservableObject
     private User user = new();
 
 
+
     [ObservableProperty]
     private ObservableCollection<Role> _roleList = new ObservableCollection<Role>();
 

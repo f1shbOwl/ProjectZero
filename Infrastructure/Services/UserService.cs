@@ -36,62 +36,6 @@ public class UserService
 
 
 
-    //public async Task <User> CreateUserAsync(User user)
-    //{
-    //    try
-    //    {
-    //        var result = await _userRepo.GetOneAsync(x => x.Email == user.Email);
-    //        if (result == null)
-    //        {
-    //            var role = await _roleService.CreateRoleAsync(user.RoleName);
-    //            var address = _addressService.CreateAddress(user.StreetName, user.PostalCode, user.City);
-
-    //            var userEntity = new UserEntity
-    //            {
-    //                Email = user.Email,
-    //                RoleId = role.Id,
-    //                AddressId = address.Id
-    //            };
-
-    //            result = await _userRepo.CreateAsync(userEntity);
-    //            if (result != null)
-    //                return new User
-    //                {
-    //                    Id = result.Id,
-    //                    Email = result.Email,
-    //                    Role = new Role
-    //                    {
-    //                        Id = result.Role.Id,
-    //                        RoleName = result.Role.RoleName
-    //                    },
-    //                    Address = new Address
-    //                    {
-    //                        Id = result.Address.Id,
-    //                        StreetName = result.Address.StreetName,
-    //                        PostalCode = result.Address.PostalCode,
-    //                        City = result.Address.City
-    //                    },
-    //                    ContactInformation = new ContactInformation
-    //                    {
-    //                        Userid = result.ContactInformation.UserId,
-    //                        FirstName = result.ContactInformation.FirstName,
-    //                        LastName = result.ContactInformation.LastName,
-    //                        PhoneNumber = result.ContactInformation.PhoneNumber,
-    //                    },
-    //                    Authentication = new Authentication
-    //                    {
-    //                        UserId = result.Authentication.UserId,
-    //                        UserName = result.Authentication.UserName,
-    //                        Password = result.Authentication.Password,
-    //                    }
-    //                };
-    //        }
-    //    }
-    //    catch (Exception ex) { Debug.WriteLine("ERROR :: " + ex.Message); }
-    //    return null!;
-    //}
-
-
     public async Task<UserEntity> CreateUserAsync(User user)
     {
         try
@@ -239,94 +183,71 @@ public class UserService
 
 
 
-
-    //public async Task <User> UpdateUserAsync(User updatedUser)
-    //{
-    //    try
-    //    {
-    //        var entity = await _userRepo.GetOneAsync(x => x.Id == updatedUser.Id);
-    //        if (entity != null)
-    //        {
-    //            var role = await _roleService.CreateRoleAsync(updatedUser.RoleName);
-    //            var address = await _addressService.CreateAddressAsync(updatedUser.StreetName, updatedUser.PostalCode, updatedUser.City);
-
-    //            entity.Email = updatedUser.Email;
-    //            entity.RoleId = updatedUser.RoleId;
-    //            entity.AddressId = updatedUser.AddressId;
-
-    //            var result = await _userRepo.UpdateAsync(x => x.Id == updatedUser.Id, entity);
-    //            if (result != null)
-    //                return new User
-    //                {
-    //                    Id = result.Id,
-    //                    Email = result.Email,
-    //                    Role = new Role
-    //                    {
-    //                        Id = result.Role.Id,
-    //                        RoleName = result.Role.RoleName,
-    //                    },
-    //                    Address = new Address
-    //                    {
-    //                        Id = result.Address.Id,
-    //                        StreetName = result.Address.StreetName,
-    //                        PostalCode = result.Address.PostalCode,
-    //                        City = result.Address.City,
-    //                    },
-    //                    ContactInformation = new ContactInformation
-    //                    {
-    //                        Userid = result.ContactInformation.UserId,
-    //                        PhoneNumber = result.ContactInformation.PhoneNumber,
-    //                        FirstName = result.ContactInformation.FirstName,
-    //                        LastName = result.ContactInformation.LastName,
-    //                    },
-    //                    Authentication = new Authentication
-    //                    {
-    //                        UserId = result.Authentication.UserId,
-    //                        UserName = result.Authentication.UserName,
-    //                        Password = result.Authentication.Password,
-    //                    }
-    //                };
-    //        }
-    //    }
-    //    catch { }
-    //    return null!;
-    //}
-
-
-
+    // Denna gör vad den ska, verkar det som i alla fall och ser snyggare ut än den nedan.
     public async Task<UserEntity> UpdateUserAsync(User updatedUser)
     {
         try
         {
-            var existingUserEntity = await _userRepo.GetOneAsync(x => x.Id == updatedUser.Id);
-
-            if (existingUserEntity != null)
+            var entity = await _userRepo.GetOneAsync(x => x.Id == updatedUser.Id);
+            if (entity != null)
             {
-                existingUserEntity.Role.RoleName = updatedUser.RoleName;
+                var roleEntity = _roleService.CreateRole(updatedUser.RoleName);
+                var addressEntity = _addressService.CreateAddress(updatedUser.StreetName, updatedUser.PostalCode, updatedUser.City);
 
-                existingUserEntity.Address.StreetName = updatedUser.StreetName;
-                existingUserEntity.Address.PostalCode = updatedUser.PostalCode;
-                existingUserEntity.Address.City = updatedUser.City;
+                entity.Email = updatedUser.Email;
+                entity.AddressId = addressEntity.Id;
+                entity.RoleId = roleEntity.Id;
 
-                existingUserEntity.ContactInformation.FirstName = updatedUser.FirstName;
-                existingUserEntity.ContactInformation.LastName = updatedUser.LastName;
-                existingUserEntity.ContactInformation.PhoneNumber = updatedUser.PhoneNumber ?? existingUserEntity.ContactInformation.PhoneNumber;
-
-                existingUserEntity.Authentication.UserName = updatedUser.UserName;
-                existingUserEntity.Authentication.Password = updatedUser.Password;
-
-                existingUserEntity.Email = updatedUser.Email;
-
-                return await _userRepo.UpdateAsync(x => x.Id == updatedUser.Id, existingUserEntity);
+                var result = await _userRepo.UpdateAsync(x => x.Id == updatedUser.Id, entity);
+                if (result != null)
+                    return new UserEntity
+                    {
+                        Id = updatedUser.Id,
+                        Email = result.Email,
+                        AddressId = result.AddressId,
+                        RoleId = result.RoleId,
+                    };
+                var contactInformationEntity = _contactInformationService.CreateContactInfo(updatedUser.FirstName, updatedUser.LastName, updatedUser.PhoneNumber!, updatedUser.Id);
+                var authenticationEntity = _authenticationService.CreateAuthentication(updatedUser.UserName, updatedUser.Password, updatedUser.Id);
             }
         }
-        catch (Exception ex)
-        {
-            Debug.WriteLine("ERROR :: " + ex.Message);
-        }
-
+        catch { }
         return null!;
     }
+
+    //public async Task<UserEntity> UpdateUserAsync(User updatedUser)
+    //{
+    //    try
+    //    {
+    //        var existingUserEntity = await _userRepo.GetOneAsync(x => x.Id == updatedUser.Id);
+
+    //        if (existingUserEntity != null)
+    //        {
+    //            existingUserEntity.Role.RoleName = updatedUser.RoleName;
+
+    //            existingUserEntity.Address.StreetName = updatedUser.StreetName;
+    //            existingUserEntity.Address.PostalCode = updatedUser.PostalCode;
+    //            existingUserEntity.Address.City = updatedUser.City;
+
+    //            existingUserEntity.ContactInformation.FirstName = updatedUser.FirstName;
+    //            existingUserEntity.ContactInformation.LastName = updatedUser.LastName;
+    //            existingUserEntity.ContactInformation.PhoneNumber = updatedUser.PhoneNumber ?? existingUserEntity.ContactInformation.PhoneNumber;
+
+    //            existingUserEntity.Authentication.UserName = updatedUser.UserName;
+    //            existingUserEntity.Authentication.Password = updatedUser.Password;
+
+    //            existingUserEntity.Email = updatedUser.Email;
+
+    //            return await _userRepo.UpdateAsync(x => x.Id == updatedUser.Id, existingUserEntity);
+    //        }
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        Debug.WriteLine("ERROR :: " + ex.Message);
+    //    }
+
+    //    return null!;
+    //}
 
 
     public void DeleteUser(User user)

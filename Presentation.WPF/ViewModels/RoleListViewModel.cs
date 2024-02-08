@@ -51,7 +51,7 @@ public partial class RoleListViewModel : ObservableObject
 
         if (result == MessageBoxResult.Yes)
         {
-            _roleService.DeleteRole(Role);
+            _roleService.DeleteRole(role);
 
             var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
             mainViewModel.CurrentViewModel = _serviceProvider.GetRequiredService<RoleListViewModel>();

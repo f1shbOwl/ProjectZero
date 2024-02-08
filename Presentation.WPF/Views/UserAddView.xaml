@@ -36,8 +36,8 @@
             <Label Content="City" />
             <TextBox Text="{Binding User.City}" />
             <Label Content="Role" />
-            <TextBox Text="{Binding User.RoleName}" />
-            <!--<ComboBox ItemsSource="{Binding RoleList}" SelectedItem="{Binding User.RoleName, Mode=TwoWay}" DisplayMemberPath="RoleName" />-->
+            <!--<TextBox Text="{Binding User.RoleName}" />-->
+            <ComboBox ItemsSource="{Binding RoleList}" SelectedItem="{Binding User.RoleName, Mode=TwoWay}" DisplayMemberPath="RoleName" />
             <Label Content="Username" />
             <TextBox Text="{Binding User.UserName}" />
             <Label Content="Password" />
