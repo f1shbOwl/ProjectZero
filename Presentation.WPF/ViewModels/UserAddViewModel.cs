@@ -15,6 +15,11 @@ public partial class UserAddViewModel : ObservableObject
     private readonly RoleService _roleService;
     private readonly IServiceProvider _serviceProvider;
 
+    [ObservableProperty]
+    private ObservableCollection<Role> _roleList = new ObservableCollection<Role>();
+
+    [ObservableProperty]
+    private User user = new();
 
     public UserAddViewModel(UserService userService,RoleService roleService ,IServiceProvider serviceProvider)
     {
@@ -25,13 +30,7 @@ public partial class UserAddViewModel : ObservableObject
         RoleList = new ObservableCollection<Role>(_roleService.GetAllRoles());
     }
 
-    [ObservableProperty]
-    private User user = new();
 
-
-
-    [ObservableProperty]
-    private ObservableCollection<Role> _roleList = new ObservableCollection<Role>();
 
 
 

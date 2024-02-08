@@ -10,35 +10,57 @@
              d:DataContext="{d:DesignInstance Type=viewmodels:EditUserViewModel}"
              
              mc:Ignorable="d" 
-             d:DesignHeight="800" d:DesignWidth="800">
+             d:DesignHeight="600" d:DesignWidth="800">
     
     
-    <Grid Margin="20">
+    <Grid Margin="40">
+       
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" MaxHeight="200" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
 
-        <StackPanel DataContext="{Binding User}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <StackPanel DataContext="{Binding User}" Grid.Row="0" Grid.Column="0">
             <Label Content="First name:" Foreground="Gray" Margin="5"/>
-            <TextBox Text="{Binding FirstName}" Padding="2, 5" Margin="5" />
+            <TextBox Text="{Binding FirstName}" Padding="2,5" Margin="5" />
             <Label Content="Last name:" Foreground="Gray" />
-            <TextBox Text="{Binding LastName}" Padding="2, 5" Margin="5" />
-            <Label Content="Email:" Foreground="Gray" />
-            <TextBox Text="{Binding Email}" Padding="2, 5" Margin="5" />
-            <Label Content="Phone number:" Foreground="Gray" />
-            <TextBox Text="{Binding PhoneNumber}" Padding="2, 5" Margin="5" />
-            <Label Content="Street:" Foreground="Gray" />
-            <TextBox Text="{Binding StreetName}" Padding="2, 5" Margin="5" />
-            <Label Content="Postal code:" Foreground="Gray" />
-            <TextBox Text="{Binding PostalCode}" Padding="2, 5" Margin="5" />
-            <Label Content="City:" Foreground="Gray" />
-            <TextBox Text="{Binding City}" Padding="2, 5" Margin="5" />
-            <Label Content="Username:" Foreground="Gray" />
-            <TextBox Text="{Binding UserName}" Padding="2, 5" Margin="5" />
-            <Label Content="Password:" Foreground="Gray" />
-            <TextBox Text="{Binding Password}" Padding="2, 5" Margin="5" />
-            <Label Content="Role:" Foreground="Gray" />
-            <TextBox Text="{Binding RoleName}" Padding="2, 5" Margin="5" />
-            <Button Content="Save all" CommandParameter="{Binding .}" Command="{Binding Path=DataContext.UpdateCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Padding="5" Margin="0,30" />
-            <Button Content="Update email" CommandParameter="{Binding .}" Command="{Binding Path=DataContext.UpdateUserEmailCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Padding="5" Margin="0,5" />
+            <TextBox Text="{Binding LastName}" Padding="2,5" Margin="5" />
         </StackPanel>
+
+        <StackPanel DataContext="{Binding User}" Grid.Row="0" Grid.Column="1">
+            <Label Content="Email:" Foreground="Gray" Margin="5" />
+            <TextBox Text="{Binding Email}" Padding="2,5" Margin="5" />
+            <Label Content="Phone number:" Foreground="Gray" />
+            <TextBox Text="{Binding PhoneNumber}" Padding="2,5" Margin="5" />
+        </StackPanel>
+
+        <StackPanel DataContext="{Binding User}" Grid.Row="1" Grid.Column="0">
+            <Label Content="Street:" Foreground="Gray" />
+            <TextBox Text="{Binding StreetName}" Padding="2,5" Margin="5" />
+            <Label Content="Postal code:" Foreground="Gray" />
+            <TextBox Text="{Binding PostalCode}" Padding="2,5" Margin="5" />
+            <Label Content="City:" Foreground="Gray" />
+            <TextBox Text="{Binding City}" Padding="2,5" Margin="5" />
+            <Button Content="Save" Grid.Column="0"  CommandParameter="{Binding .}" Command="{Binding Path=DataContext.UpdateCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" HorizontalAlignment="Right" Height="30" Width="110" Padding="5" Margin="40,20"  />
+        </StackPanel>
+
+        <StackPanel DataContext="{Binding User}" Grid.Row="1" Grid.Column="1">
+            <Label Content="Username:" Foreground="Gray" />
+            <TextBox Text="{Binding UserName}" Padding="2,5" Margin="5" />
+            <Label Content="Password:" Foreground="Gray" />
+            <TextBox Text="{Binding Password}" Padding="2,5" Margin="5" />
+            <Label Content="Role:" Foreground="Gray" />
+            <TextBox Text="{Binding RoleName}" Padding="2,5" Margin="5" />
+            <Button Content="Cancel" Grid.Column="1" CommandParameter="{Binding .}" Command="{Binding Path=DataContext.CancelCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" HorizontalAlignment="Left" Height="30" Width="110" Padding="5" Margin="40,20" />
+        </StackPanel>
+
+
 
     </Grid>
 </UserControl>

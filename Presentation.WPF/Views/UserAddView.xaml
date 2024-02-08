@@ -10,48 +10,56 @@
              d:DataContext="{d:DesignInstance Type=viewmodels:UserAddViewModel}"
              
              mc:Ignorable="d" 
-             d:DesignHeight="800" d:DesignWidth="400">
-    
-    
-    
-    <Grid Margin="20">
+             d:DesignHeight="600" d:DesignWidth="800">
+
+
+
+    <Grid Margin="40">
+
         <Grid.RowDefinitions>
-            <RowDefinition Height="500" />
+            <RowDefinition Height="*" MaxHeight="200" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Margin="0,5,0,0">
-            <Label Content="First name" />
-            <TextBox Text="{Binding User.FirstName}" />
-            <Label Content="Last name" />
-            <TextBox Text="{Binding User.LastName}" />
-            <Label Content="Email" />
-            <TextBox Text="{Binding User.Email}" />
-            <Label Content="Phone" />
-            <TextBox Text="{Binding User.PhoneNumber}" />
-            <Label Content="Address" />
-            <TextBox Text="{Binding User.StreetName}" />
-            <Label Content="Postal code" />
-            <TextBox Text="{Binding User.PostalCode}" />
-            <Label Content="City" />
-            <TextBox Text="{Binding User.City}" />
-            <Label Content="Role" />
-            <!--<TextBox Text="{Binding User.RoleName}" />-->
-            <ComboBox ItemsSource="{Binding RoleList}" SelectedItem="{Binding User.RoleName, Mode=TwoWay}" DisplayMemberPath="RoleName" />
-            <Label Content="Username" />
-            <TextBox Text="{Binding User.UserName}" />
-            <Label Content="Password" />
-            <TextBox Text="{Binding User.Password}" />
-            <Button Content="Add User" Command="{Binding AddUserCommand}" Height="25" Width="80" Margin="0,20,0,0" />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Row="0" Grid.Column="0">
+            <Label Content="First name:" Foreground="Gray" Margin="5"/>
+            <TextBox Text="{Binding User.FirstName}" Padding="2,5" Margin="5" />
+            <Label Content="Last name:" Foreground="Gray" />
+            <TextBox Text="{Binding User.LastName}" Padding="2,5" Margin="5" />
         </StackPanel>
 
-        <StackPanel Grid.Row="1">
-            <Button Content="Go back" Command="{Binding NavigateToListCommand}" Height="30" Width="110" Margin="10,5"/>
+        <StackPanel Grid.Row="0" Grid.Column="1">
+            <Label Content="Email:" Foreground="Gray" Margin="5" />
+            <TextBox Text="{Binding User.Email}" Padding="2,5" Margin="5" />
+            <Label Content="Phone number:" Foreground="Gray" />
+            <TextBox Text="{Binding PhoneNumber}" Padding="2,5" Margin="5" />
         </StackPanel>
 
+        <StackPanel Grid.Row="1" Grid.Column="0">
+            <Label Content="Street:" Foreground="Gray" />
+            <TextBox Text="{Binding User.StreetName}" Padding="2,5" Margin="5" />
+            <Label Content="Postal code:" Foreground="Gray" />
+            <TextBox Text="{Binding User.PostalCode}" Padding="2,5" Margin="5" />
+            <Label Content="City:" Foreground="Gray" />
+            <TextBox Text="{Binding User.City}" Padding="2,5" Margin="5" />
+            <Button Content="Add User" Command="{Binding AddUserCommand}" HorizontalAlignment="Right" Height="30" Width="110" Padding="5" Margin="40,20"  />
+        </StackPanel>
 
-
-
+        <StackPanel Grid.Row="1" Grid.Column="1">
+            <Label Content="Username:" Foreground="Gray" />
+            <TextBox Text="{Binding User.UserName}" Padding="2,5" Margin="5" />
+            <Label Content="Password:" Foreground="Gray" />
+            <TextBox Text="{Binding User.Password}" Padding="2,5" Margin="5" />
+            <Label Content="Role:" Foreground="Gray" />
+            <TextBox Text="{Binding User.RoleName}" Padding="2,5" Margin="5" />
+            <Button Content="Cancel" Command="{Binding NavigateToListCommand}" HorizontalAlignment="Left" Height="30" Width="110" Padding="5" Margin="40,20" />
+        </StackPanel>
 
 
 

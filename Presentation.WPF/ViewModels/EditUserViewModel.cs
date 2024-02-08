@@ -36,13 +36,10 @@ public partial class EditUserViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private async Task UpdateUserEmail()
+    private void Cancel()
     {
-        await _userService.UpdateUserEmailAsync(User);
-
         var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
         mainViewModel.CurrentViewModel = _serviceProvider.GetRequiredService<UserDetailViewModel>();
-
     }
 
 
