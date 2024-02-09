@@ -13,9 +13,50 @@
              
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="800">
-    
-    
+
+    <!--Jag ville göra den här sorterbar alfabetiskt eller något.-->
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="AddressCollectionViewSource" Source="{Binding AddressList}"/>
+    </UserControl.Resources>
+
     <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+
+        <ListView Grid.Row="0" ItemsSource="{Binding Source={StaticResource AddressCollectionViewSource}}" HorizontalContentAlignment="Stretch" Foreground="Black">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Street Name" DisplayMemberBinding="{Binding StreetName}" Width="240"/>
+                    <GridViewColumn Header="Postal Code" DisplayMemberBinding="{Binding PostalCode}" Width="240"/>
+                    <GridViewColumn Header="City" DisplayMemberBinding="{Binding City}" Width="240"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <Grid Grid.Row="1" Margin="20" HorizontalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0" Content="Users" Command="{Binding NavigateToUsersCommand}" Height="50" Width="150" Margin="5" Background="WhiteSmoke"/>
+            <Button Grid.Column="1" Content="Roles" Command="{Binding NavigateToRolesCommand}" Height="50" Width="150" Margin="5" Background="WhiteSmoke"/>
+            <Button Grid.Column="2" Content="Addresses" Command="{Binding NavigateToAddressesCommand}" Height="50" Width="150" Margin="5" Background="NavajoWhite"/>
+        </Grid>
+    </Grid>
+
+
+
+
+
+
+
+
+
+    <!--<Grid Margin="20">
 
 
         <Grid.RowDefinitions>
@@ -44,9 +85,9 @@
                         </StackPanel>
 
 
-                        <!--<Button Grid.Row="0" Grid.Column="1" Content="i" CommandParameter="{Binding .}" Command="{Binding Path=DataContext.NavigateToUserDetailViewCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"  Width="25" Height="25" Margin="5" Background="WhiteSmoke" />
+                        --><!--<Button Grid.Row="0" Grid.Column="1" Content="i" CommandParameter="{Binding .}" Command="{Binding Path=DataContext.NavigateToUserDetailViewCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"  Width="25" Height="25" Margin="5" Background="WhiteSmoke" />
                         <Button Grid.Row="0" Grid.Column="2" Content="..." CommandParameter="{Binding .}" Command="{Binding Path=DataContext.NavigateToEditContactViewCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"  Width="25" Height="25" Margin="5" Background="WhiteSmoke" />
-                        <Button Grid.Row="0" Grid.Column="3" Content="X" CommandParameter="{Binding .}" Command="{Binding Path=DataContext.DeleteUserCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Width="25" Height="25" Margin="5" Background="WhiteSmoke"/>-->
+                        <Button Grid.Row="0" Grid.Column="3" Content="X" CommandParameter="{Binding .}" Command="{Binding Path=DataContext.DeleteUserCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Width="25" Height="25" Margin="5" Background="WhiteSmoke"/>--><!--
 
 
                     </Grid>
@@ -65,5 +106,5 @@
             <Button Grid.Column="1" Content="Roles" Command="{Binding NavigateToRolesCommand}" Height="50" Width="150" Margin="5" Background="WhiteSmoke"/>
             <Button Grid.Column="2" Content="Addresses" Command="{Binding NavigateToAddressesCommand}" Height="50" Width="150" Margin="5" Background="NavajoWhite"/>
         </Grid>
-    </Grid>
+    </Grid>-->
 </UserControl>

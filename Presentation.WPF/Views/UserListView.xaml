@@ -42,9 +42,9 @@
                         </StackPanel>
 
 
-                        <Button Grid.Row="0" Grid.Column="1" Content="i" CommandParameter="{Binding .}" Command="{Binding Path=DataContext.NavigateToUserDetailViewCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"  Width="25" Height="25" Margin="5" Background="WhiteSmoke" />
-                        <Button Grid.Row="0" Grid.Column="2" Content="..." CommandParameter="{Binding .}" Command="{Binding Path=DataContext.NavigateToEditContactViewCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"  Width="25" Height="25" Margin="5" Background="WhiteSmoke" />
-                        <Button Grid.Row="0" Grid.Column="3" Content="X" CommandParameter="{Binding .}" Command="{Binding Path=DataContext.DeleteUserCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Width="25" Height="25" Margin="5" Background="WhiteSmoke"/>
+                        <Button Grid.Row="0" Grid.Column="1" Content="View" CommandParameter="{Binding .}" Command="{Binding Path=DataContext.NavigateToUserDetailViewCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"  Width="45" Height="25" Margin="5" Background="WhiteSmoke" />
+                        <Button Grid.Row="0" Grid.Column="2" Content="Edit" CommandParameter="{Binding .}" Command="{Binding Path=DataContext.NavigateToEditContactViewCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"  Width="45" Height="25" Margin="5" Background="WhiteSmoke" />
+                        <Button Grid.Row="0" Grid.Column="3" Content="Delete" CommandParameter="{Binding .}" Command="{Binding Path=DataContext.DeleteUserCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Width="45" Height="25" Margin="5" Background="WhiteSmoke"/>
                         
 
                     </Grid>
