@@ -18,7 +18,7 @@ public partial class UserAddViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<Role> _roleList = new ObservableCollection<Role>();
 
-    //public Role SelectedRole { get; set; } = null!;
+    public Role SelectedRole { get; set; } = null!;
 
 
     [ObservableProperty]
@@ -35,17 +35,21 @@ public partial class UserAddViewModel : ObservableObject
     }
 
 
-    //Får inte till den där comboboxen.
+
+
+
+
+
 
 
 
     [RelayCommand]
     private async Task AddUser(User user)
     {
-        //if (SelectedRole != null)
-        //{
-        //    user.RoleName = SelectedRole.RoleName;
-        //}
+        if (SelectedRole != null)
+        {
+            User.RoleName = SelectedRole.RoleName;
+        }
 
         await _userService.CreateUserAsync(User);
 

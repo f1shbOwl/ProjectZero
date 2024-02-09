@@ -65,4 +65,11 @@ public partial class RoleListViewModel : ObservableObject
         mainViewModel.CurrentViewModel = _serviceProvider.GetRequiredService<UserListViewModel>();
     }
 
+    [RelayCommand]
+    private void NavigateToAddresses()
+    {
+        var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
+        mainViewModel.CurrentViewModel = _serviceProvider.GetRequiredService<AddressListViewModel>();
+    }
+
 }

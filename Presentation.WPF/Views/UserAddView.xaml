@@ -57,8 +57,7 @@
             <Label Content="Password:" Foreground="Gray" Margin="20,0,0,0" />
             <TextBox Text="{Binding User.Password}" Padding="2,5" Margin="25,5,20,0" />
             <Label Content="Role:" Foreground="Gray" Margin="20,0,0,0" />
-            <!--<ComboBox ItemsSource="{Binding RoleList}" SelectedItem="{Binding SelectedRole, Mode=TwoWay}" DisplayMemberPath="RoleName" Padding="2,5" Margin="5" />-->
-            <TextBox Text="{Binding User.RoleName}" Padding="2,5" Margin="25,5,20,0" />
+            <ComboBox ItemsSource="{Binding RoleList}" SelectedItem="{Binding SelectedRole, Mode=TwoWay}" DisplayMemberPath="RoleName" Padding="2,5" Margin="25,5,20,0" />
             <Button Content="Cancel" Command="{Binding NavigateToListCommand}" HorizontalAlignment="Left" Height="30" Width="110" Padding="5" Margin="20,70" />
         </StackPanel>
 

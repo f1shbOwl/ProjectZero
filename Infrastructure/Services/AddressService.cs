@@ -1,6 +1,7 @@
 ﻿using Infrastructure.Dtos;
 using Infrastructure.Entities;
 using Infrastructure.Repositories;
+using System.Diagnostics;
 using System.Linq.Expressions;
 
 namespace Infrastructure.Services;
@@ -42,6 +43,35 @@ public class AddressService(AddressRepo addressRepo)
     //}
 
 
+    public IEnumerable<Address> GetAllAddresses()
+    {
+        var addresses = new List<Address>();
+        try
+        {
+            var result = _addressRepo.GetAll();
+
+            if (result != null)
+            {
+                foreach (var address in result)
+                    addresses.Add(new Address
+                    {
+                        Id = address.Id,
+                        StreetName = address.StreetName,
+                        PostalCode = address.PostalCode,
+                        City = address.City,
+                    });
+            }
+            return addresses;
+
+        }
+        catch (Exception ex) { Debug.WriteLine("ERROR :: " + ex.Message); }
+        return null!;
+
+    }
+
+
+
+
     //Get One Address
 
     public async Task <Address> GetAddressAsync(Expression<Func<AddressEntity, bool>> predicate)
@@ -68,11 +98,11 @@ public class AddressService(AddressRepo addressRepo)
         return addressEntity;
     }
 
-    public IEnumerable<AddressEntity> GetAllAddresses()
-    {
-        var addresses = new List<AddressEntity>();
-        return addresses;
-    }
+    //public IEnumerable<AddressEntity> GetAllAddresses()
+    //{
+    //    var addresses = new List<AddressEntity>();
+    //    return addresses;
+    //}
 
     public AddressEntity UpdateAddress(AddressEntity addressEntity)
     {

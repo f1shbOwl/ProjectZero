@@ -13,7 +13,7 @@
              
              
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="600" d:DesignWidth="800">
 
 
 
@@ -34,7 +34,7 @@
             </Grid.ColumnDefinitions>
 
             <TextBox Grid.Column="0" Text="{Binding Role.RoleName}" Padding="10" Margin="0 0 10 0" />
-            <Button Grid.Column="1" HorizontalAlignment="Right" Content="Add" Command="{Binding AddRoleCommand}" Padding="40 10" />
+            <Button Grid.Column="1" HorizontalAlignment="Right" Content="Add" Command="{Binding AddRoleCommand}" Padding="40 10" Background="NavajoWhite" />
         </Grid>
 
         <ListView Grid.Row="1" ItemsSource="{Binding RoleList}" Margin="0 20 0 0" HorizontalContentAlignment="Stretch">
@@ -53,9 +53,17 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <StackPanel Grid.Row="3">
-            <Button Content="Users" Command="{Binding NavigateToUsersCommand}" Height="50" Width="150" Margin="10,10"/>
-        </StackPanel>
+        <Grid Grid.Row="2" Margin="20" HorizontalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0" Content="Users" Command="{Binding NavigateToUsersCommand}" Height="50" Width="150" Margin="5" Background="WhiteSmoke"/>
+            <Button Grid.Column="1" Content="Roles" Command="{Binding NavigateToRolesCommand}" Height="50" Width="150" Margin="5" Background="NavajoWhite"/>
+            <Button Grid.Column="2"  Content="Addresses" Command="{Binding NavigateToAddressesCommand}" Height="50" Width="150" Margin="5" Background="WhiteSmoke"/>
+        </Grid>
 
     </Grid>
 </UserControl>

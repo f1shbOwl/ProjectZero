@@ -35,7 +35,11 @@ public class UserService
 
 
 
-
+    /// <summary>
+    /// Async Create One User
+    /// </summary>
+    /// <param name="user"></param>
+    /// <returns></returns>
     public async Task<UserEntity> CreateUserAsync(User user)
     {
         try
@@ -66,7 +70,11 @@ public class UserService
     }
 
 
-
+    /// <summary>
+    /// Create One User - no Async
+    /// </summary>
+    /// <param name="user"></param>
+    /// <returns></returns>
     public UserEntity CreateUser(User user)
     {
         try
@@ -160,7 +168,11 @@ public class UserService
     }
 
 
-
+    /// <summary>
+    /// En metod jag lade till för att prova uppdatera endast email.
+    /// </summary>
+    /// <param name="updatedUser"></param>
+    /// <returns></returns>
     public async Task<UserEntity> UpdateUserEmailAsync(User updatedUser)
     {
         try
@@ -183,7 +195,7 @@ public class UserService
 
 
 
-    // Denna gör vad den ska, verkar det som i alla fall och ser snyggare ut än den nedan.
+    // Denna gör vad den ska och ser snyggare ut än den nedan.
     public async Task<UserEntity> UpdateUserAsync(User updatedUser)
     {
         try

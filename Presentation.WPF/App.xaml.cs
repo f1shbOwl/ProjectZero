@@ -51,6 +51,10 @@ namespace Presentation.WPF
                 services.AddTransient<RoleListViewModel>();
                 services.AddTransient<RoleListView>();
 
+                services.AddTransient<AddressListViewModel>();
+                services.AddTransient<AddressListView>();
+
+
             }).Build();
         }
 

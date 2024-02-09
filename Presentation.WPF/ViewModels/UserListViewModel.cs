@@ -76,11 +76,30 @@ public partial class UserListViewModel : ObservableObject
         mainViewModel.CurrentViewModel = _serviceProvider.GetRequiredService<EditUserViewModel>();
     }
 
+
+    [RelayCommand]
+    private void DoubleClickToDetailView(User user)
+    {
+        _userService.SelectedUser = user;
+
+        var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
+        mainViewModel.CurrentViewModel = _serviceProvider.GetRequiredService<UserDetailViewModel>();
+    }
+
+
+
     [RelayCommand]
     private void NavigateToRoles()
     {
         var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
         mainViewModel.CurrentViewModel = _serviceProvider.GetRequiredService<RoleListViewModel>();
+    }
+
+    [RelayCommand]
+    private void NavigateToAddresses()
+    {
+        var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
+        mainViewModel.CurrentViewModel = _serviceProvider.GetRequiredService<AddressListViewModel>();
     }
 
 }

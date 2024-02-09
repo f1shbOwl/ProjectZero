@@ -47,6 +47,10 @@
                     <views:RoleListView />
                 </DataTemplate>
 
+                <DataTemplate DataType="{x:Type viewmodels:AddressListViewModel}">
+                    <views:AddressListView />
+                </DataTemplate>
+
             </ContentControl.Resources>
 
         </ContentControl>
