@@ -34,7 +34,7 @@
 
                         <StackPanel Grid.Column="0" Margin="0,0,0,5">
                             <TextBlock>
-                                <Run Text="{Binding FirstName}" />
+                                <Run Text="{Binding FirstName}"/>
                                 <Run Text="{Binding LastName}" />
                                 <LineBreak />
                                 <Run Text="{Binding RoleName}" Foreground="DarkGray" />
@@ -52,16 +52,20 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <Grid Grid.Row="1" Margin="20" HorizontalAlignment="Center">
+        <Grid Grid.Row="1" Margin="20" HorizontalAlignment="Left">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
-            
-            <Button Grid.Column="0" Content="Add new User" Command="{Binding NavigateToAddViewCommand}" Height="50" Width="150" Margin="5" Background="NavajoWhite"/>
-            <Button Grid.Column="1" Content="Roles" Command="{Binding NavigateToRolesCommand}" Height="50" Width="150" Margin="5" Background="WhiteSmoke"/>
-            <Button Grid.Column="2"  Content="Addresses" Command="{Binding NavigateToAddressesCommand}" Height="50" Width="150" Margin="5" Background="WhiteSmoke"/>
+
+            <Button Grid.Column="0" Content="Users" Command="{Binding NavigateToUsersViewCommand}" Height="50" Width="150" Margin="2" Background="Black" Foreground="LightSteelBlue"/>
+            <Button Grid.Column="1" Content="Roles" Command="{Binding NavigateToRolesCommand}" Height="50" Width="150" Margin="2" Background="LightSteelBlue" Foreground="Black"/>
+            <Button Grid.Column="2"  Content="Addresses" Command="{Binding NavigateToAddressesCommand}" Height="50" Width="150" Margin="2" Background="LightSteelBlue" Foreground="Black"/>
+        </Grid>
+
+        <Grid Grid.Row="1" Margin="20" HorizontalAlignment="Right">
+            <Button Grid.Column="0" Content="New User" Command="{Binding NavigateToAddViewCommand}" Padding="40 10" Background="NavajoWhite" />
         </Grid>
     </Grid>
 </UserControl>

@@ -16,6 +16,9 @@ public partial class AddressListViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<Address> addressList = [];
 
+    [ObservableProperty]
+    private Address address = new();
+
 
     public AddressListViewModel(AddressService addressService, IServiceProvider serviceProvider)
     {
@@ -24,6 +27,7 @@ public partial class AddressListViewModel : ObservableObject
 
         AddressList = new ObservableCollection<Address>(_addressService.GetAllAddresses());
     }
+
 
 
 

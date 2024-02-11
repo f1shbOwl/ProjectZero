@@ -29,5 +29,10 @@ namespace Presentation.WPF.Views
         {
 
         }
+
+        private void Button_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+        }
     }
 }
