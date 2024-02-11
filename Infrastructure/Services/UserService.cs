@@ -4,6 +4,7 @@ using Infrastructure.Entities;
 using Infrastructure.Repositories;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Transactions;
 using System.Xml.XPath;
 
@@ -194,8 +195,15 @@ public class UserService
     }
 
 
+
+
+
+
+
+
     /// <summary>
-    /// Update one user
+    /// Den här metoden uppdaterar allt i databasen korrekt men inte i appen.
+    /// Med CreateContactInfo och CreateAuthentication så uppdateras bara Role och Address. (både i databas och app).
     /// </summary>
     /// <param name="updatedUser"></param>
     /// <returns></returns>
@@ -213,17 +221,20 @@ public class UserService
                 entity.AddressId = addressEntity.Id;
                 entity.RoleId = roleEntity.Id;
 
+                var userEntity = new UserEntity
+                {
+                    Id = updatedUser.Id,
+                    Email = updatedUser.Email,
+                    AddressId = addressEntity.Id,
+                    RoleId = roleEntity.Id,
+                };
+
                 var result = await _userRepo.UpdateAsync(x => x.Id == updatedUser.Id, entity);
-                if (result != null)
-                    return new UserEntity
-                    {
-                        Id = updatedUser.Id,
-                        Email = result.Email,
-                        AddressId = result.AddressId,
-                        RoleId = result.RoleId,
-                    };
-                var contactInformationEntity = _contactInformationService.CreateContactInfo(updatedUser.FirstName, updatedUser.LastName, updatedUser.PhoneNumber!, updatedUser.Id);
-                var authenticationEntity = _authenticationService.CreateAuthentication(updatedUser.UserName, updatedUser.Password, updatedUser.Id);
+
+                    var contactInformationEntity = await _contactInformationService.UpdateContactInfoAsync(updatedUser.Id, updatedUser.FirstName, updatedUser.LastName, updatedUser.PhoneNumber);
+                    var authenticationEntity = await _authenticationService.UpdateAuthAsync(updatedUser.Id, updatedUser.UserName, updatedUser.Password);
+
+                return result;
             }
         }
         catch { }

@@ -106,6 +106,20 @@ public abstract class BaseRepo<TEntity> where TEntity : class
         return null!;
     }
 
+
+    public virtual async Task<TEntity> UpdateOneAsync(TEntity entity)
+    {
+        try
+        {
+            _userContext.Set<TEntity>().Update(entity);
+            await _userContext.SaveChangesAsync();
+            return entity;
+        }
+        catch { }
+        return null!;
+    }
+
+
     public TEntity Update(Expression<Func<TEntity, bool>> expression, TEntity entity)
     {
         try

@@ -61,7 +61,7 @@
         </StackPanel>
 
         <Button Grid.Row="3" Grid.Column="0" Content="Delete" Command="{Binding DeleteUserCommand}" HorizontalAlignment="Right" Height="30" Width="110" Padding="5" Margin="20,70" Background="GhostWhite" />
-        <Button Grid.Row="3" Grid.Column="1" Content="Cancel" Command="{Binding NavigateToListViewCommand}" HorizontalAlignment="Left" Height="30" Width="110" Padding="5" Margin="20,70" Background="GhostWhite" />
+        <Button Grid.Row="3" Grid.Column="1" Content="Go back" Command="{Binding NavigateToListViewCommand}" HorizontalAlignment="Left" Height="30" Width="110" Padding="5" Margin="20,70" Background="GhostWhite" />
         <Button Grid.Row="4" Grid.Column="0" Content="Edit" Command="{Binding NavigateToEditUserViewCommand}" HorizontalAlignment="center" Height="30" Width="110" Padding="5" Margin="20,70" Background="NavajoWhite" />
 
 

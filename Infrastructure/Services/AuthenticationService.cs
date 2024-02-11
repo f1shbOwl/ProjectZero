@@ -58,6 +58,28 @@ public class AuthenticationService
         return updatedAuthentication;
     }
 
+
+
+    public async Task<bool> UpdateAuthAsync(Guid userId, string userName, string password)
+    {
+        try
+        {
+            var newAuthentication = await _authenticationRepo.UpdateOneAsync(new AuthenticationEntity
+            {
+                UserId = userId,
+                UserName = userName,
+                Password = password
+                
+            });
+            return newAuthentication != null;
+        }
+        catch
+        {
+
+        }
+        return false!;
+    }
+
     public void DeleteRole(Guid id)
     {
         _authenticationRepo.Delete(x => x.UserId == id);

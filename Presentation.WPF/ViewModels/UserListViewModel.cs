@@ -28,13 +28,6 @@ public partial class UserListViewModel : ObservableObject
 
 
 
-
-
-
-
-
-
-
     [RelayCommand]
     private void NavigateToAddView()
     {

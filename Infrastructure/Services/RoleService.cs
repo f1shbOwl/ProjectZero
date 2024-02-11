@@ -2,6 +2,7 @@
 using Infrastructure.Entities;
 using Infrastructure.Repositories;
 using System.Diagnostics;
+using System.Linq.Expressions;
 
 namespace Infrastructure.Services;
 
@@ -33,6 +34,19 @@ public class RoleService(RoleRepo roleRepo)
         result ??= _roleRepo.Create(new RoleEntity() { Id = result!.Id, RoleName = result.RoleName });
 
         return new RoleEntity { Id = result.Id, RoleName = result.RoleName };
+    }
+
+
+    public async Task<Role> GetRoleAsync(Expression<Func<RoleEntity, bool>> predicate)
+    {
+        try
+        {
+            var result = await _roleRepo.GetOneAsync(predicate);
+            if (result != null)
+                return new Role { Id = result.Id, RoleName = result.RoleName };
+        }
+        catch { }
+        return null!;
     }
 
     public RoleEntity GetRoleByName(Role role)

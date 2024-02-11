@@ -26,9 +26,10 @@ public class ContactInformationService(ContactInformationRepo contactInformation
     }
 
 
+
     public ContactInformationEntity CreateContactInfo(string firstName, string lastName, string phoneNumber, Guid userId)
     {
-        
+
         var contactInformationEntity = new ContactInformationEntity
         {
             FirstName = firstName,
@@ -53,11 +54,32 @@ public class ContactInformationService(ContactInformationRepo contactInformation
     }
 
 
-    public ContactInformationEntity UpdateContactInfo(ContactInformationEntity contactInformationEntity)
+    public async Task<bool> UpdateContactInfoAsync(Guid userId, string firstName, string lastName, string? phoneNumber)
     {
-        var updatedContactInfo = _contactInformationRepo.Update(x => x.UserId == contactInformationEntity.UserId, contactInformationEntity);
-        return updatedContactInfo;
+        try
+        {
+            var newContactInformation = await _contactInformationRepo.UpdateOneAsync(new ContactInformationEntity
+            {
+                UserId = userId,
+                FirstName = firstName,
+                LastName = lastName,
+                PhoneNumber = phoneNumber
+            });
+            return newContactInformation != null;
+        }
+        catch
+        {
+
+        }
+        return false!;
     }
+
+
+    //public ContactInformationEntity UpdateContactInfo(ContactInformationEntity contactInformationEntity)
+    //{
+    //    var updatedContactInfo = _contactInformationRepo.Update(x => x.UserId == contactInformationEntity.UserId, contactInformationEntity);
+    //    return updatedContactInfo;
+    //}
 
     public void DeleteContactInfo(Guid Userid)
     {
