@@ -19,7 +19,7 @@
         <CollectionViewSource x:Key="AddressCollectionViewSource" Source="{Binding AddressList}"/>
     </UserControl.Resources>
 
-
+ 
 
 
     <Grid Margin="20">
