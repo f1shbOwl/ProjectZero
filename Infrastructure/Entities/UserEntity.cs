@@ -16,7 +16,7 @@ public class UserEntity
     [Required]
     public string Email { get; set; } = null!;
 
-    [Required] 
+    [Required]  
     public int AddressId { get; set; }
     public virtual AddressEntity Address { get; set; } = null!;
 
