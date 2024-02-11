@@ -40,13 +40,6 @@ public partial class EditUserViewModel : ObservableObject
 
 
 
-
-
-
-
-
-
-
     [RelayCommand]
     private async Task Update()
     {
@@ -57,6 +50,7 @@ public partial class EditUserViewModel : ObservableObject
         }
 
         await _userService.UpdateUserAsync(User);
+
 
         var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
         mainViewModel.CurrentViewModel = _serviceProvider.GetRequiredService<UserDetailViewModel>();

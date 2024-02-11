@@ -23,7 +23,10 @@ public partial class UserListViewModel : ObservableObject
         _userService = userService;
 
         UserList = new ObservableCollection<User>(_userService.GetAllUsers());
+
     }
+
+
 
 
 
@@ -68,6 +71,7 @@ public partial class UserListViewModel : ObservableObject
         var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
         mainViewModel.CurrentViewModel = _serviceProvider.GetRequiredService<EditUserViewModel>();
     }
+
 
 
     [RelayCommand]
