@@ -4,6 +4,7 @@ using Infrastructure.Dtos;
 using Infrastructure.Services;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace Presentation.WPF.ViewModels;
 
@@ -29,6 +30,28 @@ public partial class AddressListViewModel : ObservableObject
     }
 
 
+
+
+
+
+    [RelayCommand]
+    private async Task AddAddress()
+    {
+        if (string.IsNullOrWhiteSpace(Address.StreetName) || string.IsNullOrWhiteSpace(Address.PostalCode) || string.IsNullOrWhiteSpace(Address.City))
+        {
+            MessageBox.Show("Address fields can not be empty, please enter a address", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            return;
+        }
+
+
+        await _addressService.CreateAddressAsync(Address.StreetName, Address.PostalCode, Address.City);
+
+        AddressList = new ObservableCollection<Address>(_addressService.GetAllAddresses());
+        Address = new();
+
+        var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
+        mainViewModel.CurrentViewModel = _serviceProvider.GetRequiredService<AddressListViewModel>();
+    }
 
 
 

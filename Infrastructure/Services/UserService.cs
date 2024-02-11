@@ -194,8 +194,11 @@ public class UserService
     }
 
 
-
-    // Denna gör vad den ska och ser snyggare ut än den nedan.
+    /// <summary>
+    /// Update one user
+    /// </summary>
+    /// <param name="updatedUser"></param>
+    /// <returns></returns>
     public async Task<UserEntity> UpdateUserAsync(User updatedUser)
     {
         try
@@ -226,40 +229,6 @@ public class UserService
         catch { }
         return null!;
     }
-
-    //public async Task<UserEntity> UpdateUserAsync(User updatedUser)
-    //{
-    //    try
-    //    {
-    //        var existingUserEntity = await _userRepo.GetOneAsync(x => x.Id == updatedUser.Id);
-
-    //        if (existingUserEntity != null)
-    //        {
-    //            existingUserEntity.Role.RoleName = updatedUser.RoleName;
-
-    //            existingUserEntity.Address.StreetName = updatedUser.StreetName;
-    //            existingUserEntity.Address.PostalCode = updatedUser.PostalCode;
-    //            existingUserEntity.Address.City = updatedUser.City;
-
-    //            existingUserEntity.ContactInformation.FirstName = updatedUser.FirstName;
-    //            existingUserEntity.ContactInformation.LastName = updatedUser.LastName;
-    //            existingUserEntity.ContactInformation.PhoneNumber = updatedUser.PhoneNumber ?? existingUserEntity.ContactInformation.PhoneNumber;
-
-    //            existingUserEntity.Authentication.UserName = updatedUser.UserName;
-    //            existingUserEntity.Authentication.Password = updatedUser.Password;
-
-    //            existingUserEntity.Email = updatedUser.Email;
-
-    //            return await _userRepo.UpdateAsync(x => x.Id == updatedUser.Id, existingUserEntity);
-    //        }
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        Debug.WriteLine("ERROR :: " + ex.Message);
-    //    }
-
-    //    return null!;
-    //}
 
 
     public void DeleteUser(User user)

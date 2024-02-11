@@ -34,13 +34,6 @@ public class AddressService(AddressRepo addressRepo)
 
         return new AddressEntity { Id = result.Id, StreetName = result.StreetName, PostalCode = result.PostalCode, City = result.City };
     }
-    //public AddressEntity CreateAddress(string streetName, string postalCode, string city)
-    //{
-    //    var addressEntity = _addressRepo.GetOne(x => x.StreetName == streetName && x.PostalCode == postalCode && x.City == city);
-    //    addressEntity ??= _addressRepo.Create(new AddressEntity { StreetName = streetName, PostalCode = postalCode, City = city });
-
-    //    return addressEntity;
-    //}
 
 
     public IEnumerable<Address> GetAllAddresses()
@@ -72,7 +65,6 @@ public class AddressService(AddressRepo addressRepo)
 
 
 
-    //Get One Address
 
     public async Task <Address> GetAddressAsync(Expression<Func<AddressEntity, bool>> predicate)
     {
@@ -98,11 +90,6 @@ public class AddressService(AddressRepo addressRepo)
         return addressEntity;
     }
 
-    //public IEnumerable<AddressEntity> GetAllAddresses()
-    //{
-    //    var addresses = new List<AddressEntity>();
-    //    return addresses;
-    //}
 
     public AddressEntity UpdateAddress(AddressEntity addressEntity)
     {

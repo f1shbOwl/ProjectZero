@@ -64,13 +64,17 @@ public partial class RoleListViewModel : ObservableObject
         mainViewModel.CurrentViewModel = _serviceProvider.GetRequiredService<RoleListViewModel>();
     }
 
+
+
+    //Här ville jag egentligen att om en användare finns registrerad på det rolename
+    //som ska tas bort så ska användarens role ändras istället för att både avnändaren och role tas bort.
     [RelayCommand]
     private void DeleteRole(Role role)
     {
 
         if (UserList.Any(user => user.RoleName == role.RoleName))
         {
-            MessageBoxResult result = MessageBox.Show("There are registered users with this role name. If you proceed with deletion, the users will also be removed.", "Warning", MessageBoxButton.OKCancel, MessageBoxImage.Error);
+            MessageBoxResult result = MessageBox.Show($"There are registered users with role: {role.RoleName}. If you proceed with deletion, the user(s) will also be removed.", "Warning", MessageBoxButton.OKCancel, MessageBoxImage.Error);
 
             if (result == MessageBoxResult.Yes)
             {

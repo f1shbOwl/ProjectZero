@@ -47,7 +47,7 @@
             <TextBox Text="{Binding User.PostalCode}" Padding="2,5" Margin="5,5,20,0" />
             <Label Content="City:" Foreground="Gray" />
             <TextBox Text="{Binding User.City}" Padding="2,5" Margin="5,5,20,0" />
-            <Button Content="Save" Command="{Binding UpdateCommand}" HorizontalAlignment="Right" Height="30" Width="110" Padding="5" Margin="20,70"  />
+            <Button Content="Save" Command="{Binding UpdateCommand}" HorizontalAlignment="Right" Height="30" Width="110" Padding="5" Margin="20,70" Background="NavajoWhite"  />
         </StackPanel>
 
         <StackPanel Grid.Row="1" Grid.Column="1">
@@ -57,7 +57,7 @@
             <TextBox Text="{Binding User.Password}" Padding="2,5" Margin="25,5,20,0" />
             <Label Content="Role:" Foreground="Gray" Margin="20,0,0,0" />
             <ComboBox ItemsSource="{Binding RoleList}" SelectedItem="{Binding SelectedRole, Mode=TwoWay}" DisplayMemberPath="RoleName" Padding="2,5" Margin="25,5,20,0" />
-            <Button Content="Cancel" Command="{Binding CancelCommand}" HorizontalAlignment="Left" Height="30" Width="110" Padding="5" Margin="20,70" />
+            <Button Content="Cancel" Command="{Binding CancelCommand}" HorizontalAlignment="Left" Height="30" Width="110" Padding="5" Margin="20,70" Background="GhostWhite" />
         </StackPanel>
 
 
