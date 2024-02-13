@@ -42,42 +42,6 @@ public class ContactInformationService(ContactInformationRepo contactInformation
     }
 
 
-
-
-
-
-    //public async Task <ContactInformationEntity> UpdateContactInfoAsync(ContactInformation newContactInformation)
-    //{
-    //    try
-    //    {
-    //        var entity = await _contactInformationRepo.GetOneAsync(x => x.User.Id == newContactInformation.Userid);
-    //        if (entity != null)
-    //        {
-    //            entity.FirstName = newContactInformation.FirstName;
-    //            entity.LastName = newContactInformation.LastName;
-    //            entity.PhoneNumber = newContactInformation.PhoneNumber;
-    //            entity.UserId = newContactInformation.Userid;
-
-    //            var contactInformationEntity = new ContactInformationEntity
-    //            {
-    //                FirstName = newContactInformation.FirstName,
-    //                LastName = newContactInformation.LastName,
-    //                PhoneNumber = newContactInformation.PhoneNumber,
-    //                UserId = newContactInformation.Userid,
-    //            };
-
-    //            var result = await _contactInformationRepo.UpdateAsync(x => x.User.Id == newContactInformation.Userid, entity);
-
-    //            return result!;
-    //        }
-
-    //    }
-    //    catch { }
-    //    return null!;
-    //}
-
-
-
     public async Task<bool> UpdateContactInfoAsync(Guid userId, string firstName, string lastName, string? phoneNumber)
     {
         try

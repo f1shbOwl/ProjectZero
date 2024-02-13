@@ -198,15 +198,12 @@ public class UserService
 
 
 
-
-
-
     /// <summary>
-    /// Den här metoden uppdaterar allt i databasen korrekt men inte i appen.
-    /// Med CreateContactInfo och CreateAuthentication så uppdateras bara Role och Address. (både i databas och app).
+    /// Update One User
     /// </summary>
     /// <param name="updatedUser"></param>
     /// <returns></returns>
+
     public async Task<UserEntity> UpdateUserAsync(User updatedUser)
     {
         try
