@@ -19,7 +19,7 @@ namespace Presentation.WPF
         {
             builder = Host.CreateDefaultBuilder().ConfigureServices(services =>
             {
-                services.AddDbContext<UserContext>(x => x.UseSqlServer(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=F:\Education\ec-projects\ProjectZero\Infrastructure\Data\Users_Database.mdf;Integrated Security=True;Connect Timeout=30"), ServiceLifetime.Transient);
+                services.AddDbContext<UserContext>(x => x.UseSqlServer(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=F:\Education\ec-projects\ProjectZero\Infrastructure\Data\Users_Database.mdf;Integrated Security=True;Connect Timeout=30"));
 
                 services.AddScoped<RoleRepo>();
                 services.AddScoped<AddressRepo>();
@@ -33,26 +33,26 @@ namespace Presentation.WPF
                 services.AddScoped<AuthenticationService>();
                 services.AddScoped<ContactInformationService>();
 
-                services.AddSingleton<MainViewModel>(); 
-                services.AddSingleton<MainWindow>();
+                services.AddScoped<MainViewModel>(); 
+                services.AddScoped<MainWindow>();
 
-                services.AddTransient<UserListViewModel>();
-                services.AddTransient<UserListView>();
+                services.AddScoped<UserListViewModel>();
+                services.AddScoped<UserListView>();
 
-                services.AddTransient<UserAddViewModel>();
-                services.AddTransient<UserAddView>();
+                services.AddScoped<UserAddViewModel>();
+                services.AddScoped<UserAddView>();
 
-                services.AddTransient<UserDetailViewModel>();
-                services.AddTransient<UserDetailView>();
+                services.AddScoped<UserDetailViewModel>();
+                services.AddScoped<UserDetailView>();
 
-                services.AddTransient<EditUserViewModel>();
-                services.AddTransient<EditUserView>();
+                services.AddScoped<EditUserViewModel>();
+                services.AddScoped<EditUserView>();
 
-                services.AddTransient<RoleListViewModel>();
-                services.AddTransient<RoleListView>();
+                services.AddScoped<RoleListViewModel>();
+                services.AddScoped<RoleListView>();
 
-                services.AddTransient<AddressListViewModel>();
-                services.AddTransient<AddressListView>();
+                services.AddScoped<AddressListViewModel>();
+                services.AddScoped<AddressListView>();
 
 
             }).Build();
