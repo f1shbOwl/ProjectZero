@@ -19,6 +19,7 @@ public partial class UserListViewModel : ObservableObject
 
     public UserListViewModel(IServiceProvider serviceProvider, UserService userService)
     {
+
         _serviceProvider = serviceProvider;
         _userService = userService;
 
@@ -46,6 +47,9 @@ public partial class UserListViewModel : ObservableObject
         if (result == MessageBoxResult.Yes)
         {
             _userService.DeleteUser(user);
+
+
+            UserList = new ObservableCollection<User>(_userService.GetAllUsers());
 
             var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
             mainViewModel.CurrentViewModel = _serviceProvider.GetRequiredService<UserListViewModel>();

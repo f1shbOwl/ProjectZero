@@ -18,6 +18,9 @@ public partial class UserAddViewModel : ObservableObject
     [ObservableProperty]
     private ObservableCollection<Role> _roleList = new ObservableCollection<Role>();
 
+    [ObservableProperty]
+    private ObservableCollection<User> _userList = new ObservableCollection<User>();
+
     public Role SelectedRole { get; set; } = null!;
 
 
@@ -32,12 +35,15 @@ public partial class UserAddViewModel : ObservableObject
         _serviceProvider = serviceProvider;
 
         RoleList = new ObservableCollection<Role>(_roleService.GetAllRoles());
+
+        UserList = new ObservableCollection<User>(_userService.GetAllUsers());
+
     }
 
 
 
 
-
+    
 
 
 
@@ -52,6 +58,8 @@ public partial class UserAddViewModel : ObservableObject
         }
 
         await _userService.CreateUserAsync(User);
+        UserList = new ObservableCollection<User>(_userService.GetAllUsers());
+
 
         var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
         mainViewModel.CurrentViewModel = _serviceProvider.GetRequiredService<UserListViewModel>();
